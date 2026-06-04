@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deal Radar</title>
+<meta name="description" content="In-stock, my-size, 40%+ off — across the brands I actually wear." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="sweep" aria-hidden="true"></span>
+    <h1>Deal&nbsp;Radar</h1>
+    <span class="brand-sub">in stock · my size · 30%+ off</span>
+  </div>
+  <div class="status" id="status">
+    <span class="freshness" id="freshness">scanning…</span>
+    <span class="count" id="count"></span>
+  </div>
+</header>
+
+<main>
+  <section class="controls" id="controls" hidden>
+    <div class="control-group">
+      <span class="control-label">Brand</span>
+      <div class="chips" id="brand-chips"></div>
+    </div>
+    <div class="control-group">
+      <span class="control-label">Size</span>
+      <div class="chips" id="size-chips"></div>
+    </div>
+    <div class="control-group sort">
+      <span class="control-label">Sort</span>
+      <select id="sort">
+        <option value="discount">Biggest discount</option>
+        <option value="price-asc">Lowest price</option>
+        <option value="price-desc">Highest price</option>
+        <option value="brand">Brand</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="grid" id="grid" aria-live="polite"></section>
+
+  <section class="empty" id="empty" hidden>
+    <p class="empty-big">No deals on the radar.</p>
+    <p class="empty-sub" id="empty-sub"></p>
+  </section>
+</main>
+
+<aside class="rail">
+  <div class="panel" id="sources-panel">
+    <h2>Sources</h2>
+    <ul class="sources" id="sources"></ul>
+    <label class="trial-toggle">
+      <input type="checkbox" id="trial-toggle" />
+      <span>Include trial brands</span>
+    </label>
+    <p class="trial-help">Shows Myles Apparel, Straight Down, Cuts, Linksoul, and True Classic.</p>
+  </div>
+  <div class="panel" id="notify-panel">
+    <h2>Notifications</h2>
+    <p class="notify-state" id="notify-state">—</p>
+    <a class="notify-btn" id="notify-link" href="#" target="_blank" rel="noopener">Subscribe in ntfy</a>
+    <p class="notify-help">Push fires when a qualifying deal is new or restocks.
+       Opt in by subscribing to the topic in the ntfy app.</p>
+  </div>
+</aside>
+
+<footer class="foot">
+  <span id="generated">—</span>
+  <span class="dot-sep">·</span>
+  <span>Deals shown reflect the last successful scan. Stock can change after we check.</span>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
