@@ -14,7 +14,7 @@ const state = {
   data: null,
   brands: new Set(),
   size: "all",
-  sort: "discount",
+  sort: "score",
   includeTrialBrands: localStorage.getItem(TRIAL_PREF) === "1",
   disabledBrands: loadSet(DISABLED_BRANDS_PREF),
   enabledTrialBrands: loadSet(ENABLED_TRIAL_BRANDS_PREF),
@@ -192,12 +192,13 @@ function renderGrid() {
 
 function sortDeals(deals, mode) {
   const by = {
+    score: (a, b) => (b.score || 0) - (a.score || 0) || b.discount_percent - a.discount_percent,
     discount: (a, b) => b.discount_percent - a.discount_percent || a.sale_price - b.sale_price,
     "price-asc": (a, b) => a.sale_price - b.sale_price,
     "price-desc": (a, b) => b.sale_price - a.sale_price,
     brand: (a, b) => a.brand.localeCompare(b.brand) || b.discount_percent - a.discount_percent,
   };
-  return [...deals].sort(by[mode] || by.discount);
+  return [...deals].sort(by[mode] || by.score);
 }
 
 function card(d, i) {
