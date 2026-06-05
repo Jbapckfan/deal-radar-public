@@ -70,15 +70,29 @@ function formatAge(min) {
 }
 
 /* ---------- sources panel ---------- */
+const REASON_LABELS = {
+  no_compare_price: "no sale prices in feed — tracking baseline",
+  zero_discounts: "on sale, but under 30% off",
+  zero_matching_sizes: "nothing in your sizes",
+  empty_feed: "feed returned nothing",
+};
+
 function renderSources() {
   const ul = $("#sources");
   ul.innerHTML = "";
   for (const s of (state.data.sources || []).filter((src) => isBrandVisibleName(src.brand))) {
     const li = document.createElement("li");
     li.className = "source" + (s.status === "blocked" ? " is-blocked" : "");
+    // A healthy fetch that found 0 deals gets a neutral dot (not the green "api" dot)
+    // plus the reason, so it reads differently from a brand actually delivering deals.
+    const zeroHealthy = s.status !== "blocked" && s.deal_count === 0;
+    const dotClass = zeroHealthy ? "idle" : s.status;
+    const reason = s.deal_count === 0 && s.reason ? REASON_LABELS[s.reason] || s.reason : "";
     li.innerHTML =
-      `<span class="sdot ${s.status}"></span>` +
-      `<span class="sname">${escapeHtml(s.brand)}</span>` +
+      `<span class="sdot ${dotClass}"></span>` +
+      `<span class="sname">${escapeHtml(s.brand)}` +
+        (reason ? `<span class="sreason">${escapeHtml(reason)}</span>` : "") +
+      `</span>` +
       `<span class="scount">${s.status === "blocked" ? "blocked" : s.deal_count}</span>`;
     ul.appendChild(li);
   }
