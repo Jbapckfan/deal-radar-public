@@ -4,9 +4,11 @@
    freshness, and the (read-only) notification status. */
 
 const CFG = window.DEAL_RADAR_CONFIG || {};
-const SIZE_LABELS = { medium: "Medium", "34x32": "34×32", shoe_12: "Size 12", one_size: "One size" };
+const SIZE_LABELS = { medium: "Medium", "34x32": "34×32", short_34: "34 Shorts", shoe_12: "Size 12", one_size: "One size" };
 const TRIAL_BRANDS = new Set(["Myles Apparel", "Straight Down", "Cuts", "Linksoul", "True Classic"]);
 const TRIAL_PREF = "dealRadar.includeTrialBrands";
+const DISABLED_BRANDS_PREF = "dealRadar.disabledBrands";
+const ENABLED_TRIAL_BRANDS_PREF = "dealRadar.enabledTrialBrands";
 
 const state = {
   data: null,
@@ -14,6 +16,8 @@ const state = {
   size: "all",
   sort: "discount",
   includeTrialBrands: localStorage.getItem(TRIAL_PREF) === "1",
+  disabledBrands: loadSet(DISABLED_BRANDS_PREF),
+  enabledTrialBrands: loadSet(ENABLED_TRIAL_BRANDS_PREF),
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -35,6 +39,7 @@ async function init() {
   renderSources();
   buildChips();
   setupTrialBrands();
+  setupBrandManager();
   $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
   $("#controls").hidden = false;
   renderGrid();
@@ -68,8 +73,7 @@ function formatAge(min) {
 function renderSources() {
   const ul = $("#sources");
   ul.innerHTML = "";
-  for (const s of (state.data.sources || []).filter((src) =>
-    state.includeTrialBrands || !TRIAL_BRANDS.has(src.brand))) {
+  for (const s of (state.data.sources || []).filter((src) => isBrandVisibleName(src.brand))) {
     const li = document.createElement("li");
     li.className = "source" + (s.status === "blocked" ? " is-blocked" : "");
     li.innerHTML =
@@ -82,7 +86,7 @@ function renderSources() {
 
 /* ---------- filter chips ---------- */
 function buildChips() {
-  const deals = state.data.deals;
+  const deals = configuredDeals();
   const brandCounts = countBy(deals, (d) => d.brand);
   const defaultDeals = deals.filter(isDefaultVisible);
   const sizeCounts = countBy(defaultDeals, (d) => d.size_bucket);
@@ -90,8 +94,8 @@ function buildChips() {
   // Brand: multi-select. Show every configured brand (from sources), so
   // zero-deal brands still appear. "All" clears the selection.
   const sourceBrands = (state.data.sources || []).map((s) => s.brand);
-  const brandNames = [...new Set([...sourceBrands, ...Object.keys(brandCounts)])]
-    .filter((b) => state.includeTrialBrands || !TRIAL_BRANDS.has(b) || state.brands.has(b))
+  const brandNames = [...new Set(sourceBrands)]
+    .filter((b) => isBrandVisibleName(b) || state.brands.has(b))
     .sort((a, b) => (brandCounts[b] || 0) - (brandCounts[a] || 0) || a.localeCompare(b));
   buildBrandChips($("#brand-chips"),
     [["all", "All", defaultDeals.length, false],
@@ -150,8 +154,9 @@ function buildSizeChips(container, entries) {
 /* ---------- grid ---------- */
 function renderGrid() {
   const grid = $("#grid");
-  let deals = state.data.deals.filter((d) =>
-    (state.brands.size > 0 ? state.brands.has(d.brand) : isDefaultVisible(d)) &&
+  let deals = configuredDeals().filter((d) =>
+    isBrandVisibleName(d.brand) &&
+    (state.brands.size > 0 ? state.brands.has(d.brand) : true) &&
     (state.size === "all" || d.size_bucket === state.size));
 
   deals = sortDeals(deals, state.sort);
@@ -223,20 +228,123 @@ function setupTrialBrands() {
   toggle.addEventListener("change", () => {
     state.includeTrialBrands = toggle.checked;
     localStorage.setItem(TRIAL_PREF, state.includeTrialBrands ? "1" : "0");
-    buildChips();
-    renderSources();
-    renderGrid();
+    refreshBrandSettings();
   });
+}
+
+function setupBrandManager() {
+  renderBrandManager();
+  $("#enable-all-brands")?.addEventListener("click", () => {
+    state.disabledBrands.clear();
+    state.includeTrialBrands = true;
+    localStorage.setItem(TRIAL_PREF, "1");
+    saveSet(DISABLED_BRANDS_PREF, state.disabledBrands);
+    refreshBrandSettings();
+  });
+  $("#main-brands")?.addEventListener("click", () => {
+    state.disabledBrands.clear();
+    state.enabledTrialBrands.clear();
+    state.includeTrialBrands = false;
+    state.brands.clear();
+    localStorage.setItem(TRIAL_PREF, "0");
+    saveSet(DISABLED_BRANDS_PREF, state.disabledBrands);
+    saveSet(ENABLED_TRIAL_BRANDS_PREF, state.enabledTrialBrands);
+    refreshBrandSettings();
+  });
+}
+
+function renderBrandManager() {
+  const root = $("#brand-manager");
+  if (!root || !state.data) return;
+  const deals = configuredDeals();
+  const counts = countBy(deals, (d) => d.brand);
+  const brands = [...configuredBrandNames()]
+    .sort((a, b) => (counts[b] || 0) - (counts[a] || 0) || a.localeCompare(b));
+  root.innerHTML = "";
+  for (const brand of brands) {
+    const row = document.createElement("div");
+    row.className = "brand-toggle-row";
+    const visible = isBrandVisibleName(brand);
+    row.innerHTML =
+      `<label class="brand-toggle-main">
+         <input type="checkbox" ${visible ? "checked" : ""} />
+         <span>
+           <span class="brand-toggle-name">${escapeHtml(brand)}</span>
+           ${TRIAL_BRANDS.has(brand) ? `<span class="brand-toggle-tag">trial</span>` : ""}
+           <span class="brand-toggle-meta">${counts[brand] || 0} deals</span>
+         </span>
+       </label>
+       <button type="button" class="brand-toggle-remove" ${visible ? "" : "disabled"}>Remove</button>`;
+    row.querySelector("input").addEventListener("change", (e) => {
+      setBrandVisible(brand, e.target.checked);
+    });
+    row.querySelector("button").addEventListener("click", () => setBrandVisible(brand, false));
+    root.appendChild(row);
+  }
+}
+
+function setBrandVisible(brand, visible) {
+  if (visible) {
+    state.disabledBrands.delete(brand);
+    if (TRIAL_BRANDS.has(brand)) state.enabledTrialBrands.add(brand);
+  } else {
+    state.disabledBrands.add(brand);
+    state.enabledTrialBrands.delete(brand);
+    state.brands.delete(brand);
+  }
+  saveSet(DISABLED_BRANDS_PREF, state.disabledBrands);
+  saveSet(ENABLED_TRIAL_BRANDS_PREF, state.enabledTrialBrands);
+  refreshBrandSettings();
+}
+
+function refreshBrandSettings() {
+  for (const brand of [...state.brands]) {
+    if (!isBrandVisibleName(brand)) state.brands.delete(brand);
+  }
+  const toggle = $("#trial-toggle");
+  if (toggle) toggle.checked = state.includeTrialBrands;
+  buildChips();
+  renderSources();
+  renderBrandManager();
+  renderGrid();
 }
 
 /* ---------- helpers ---------- */
 function isDefaultVisible(deal) {
-  return state.includeTrialBrands || !TRIAL_BRANDS.has(deal.brand);
+  return isBrandVisibleName(deal.brand);
+}
+function isBrandVisibleName(brand) {
+  if (!configuredBrandNames().has(brand)) return false;
+  if (state.disabledBrands.has(brand)) return false;
+  if (TRIAL_BRANDS.has(brand)) {
+    return state.includeTrialBrands || state.enabledTrialBrands.has(brand);
+  }
+  return true;
+}
+function configuredBrandNames() {
+  return new Set((state.data?.sources || []).map((s) => s.brand));
+}
+function configuredDeals() {
+  const configured = configuredBrandNames();
+  return (state.data?.deals || []).filter((d) =>
+    d.in_stock === true && (configured.size === 0 || configured.has(d.brand)));
+}
+function loadSet(key) {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+function saveSet(key, set) {
+  localStorage.setItem(key, JSON.stringify([...set].sort()));
 }
 function countBy(arr, fn) {
   return arr.reduce((acc, x) => { const k = fn(x); acc[k] = (acc[k] || 0) + 1; return acc; }, {});
 }
-function anyActiveFilter() { return state.brands.size > 0 || state.size !== "all"; }
+function anyActiveFilter() {
+  return state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0;
+}
 function fmt(n) { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
