@@ -158,6 +158,13 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
   opacity: 0; transform: translateY(14px);
   animation: rise .5s cubic-bezier(.2,.8,.2,1) forwards;
 }
+.card-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+  text-decoration: none;
+}
 @keyframes rise { to { opacity: 1; transform: none; } }
 .card:hover {
   transform: translateY(-5px);
@@ -191,6 +198,85 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
   background: rgba(20,19,15,.82); color: var(--bone);
   border: 1px solid rgba(236,230,214,.18);
   padding: 4px 9px; border-radius: 999px; backdrop-filter: blur(4px);
+}
+.item-markers {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.marker {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 7px;
+}
+.marker.new {
+  background: var(--hot);
+  color: #2a0d00;
+}
+.marker.watched {
+  background: rgba(20,19,15,.82);
+  color: var(--signal);
+  border: 1px solid rgba(200,242,78,.35);
+}
+.card-actions {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 3;
+}
+.card-menu-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(236,230,214,.18);
+  background: rgba(20,19,15,.82);
+  color: var(--bone);
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+.card-menu-button:hover,
+.card-menu-button[aria-expanded="true"] {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+.card-menu {
+  position: absolute;
+  right: 0;
+  bottom: 36px;
+  min-width: 126px;
+  padding: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 16px 30px -18px rgba(0,0,0,.9);
+}
+.card-menu button {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  padding: 7px 9px;
+  background: transparent;
+  color: var(--bone-dim);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+.card-menu button:hover {
+  background: var(--surface);
+  color: var(--bone);
 }
 
 .card-body { padding: 13px 14px 15px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
@@ -356,6 +442,96 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
 .brand-manager-actions button:hover {
   color: var(--bone);
   border-color: var(--muted);
+}
+
+.personal-action,
+.item-clear {
+  width: 100%;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--signal-ink);
+  background: var(--signal);
+  border: 1px solid var(--signal);
+  border-radius: 10px;
+  padding: 9px 10px;
+  cursor: pointer;
+}
+.personal-action:hover,
+.item-clear:hover { filter: brightness(1.05); }
+.item-manager {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.item-manager summary {
+  cursor: pointer;
+  color: var(--bone-dim);
+  font-size: 13px;
+  font-weight: 800;
+}
+.item-manager summary span {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+  margin-top: 10px;
+}
+.item-list-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.item-row-text {
+  min-width: 0;
+  flex: 1;
+}
+.item-row-title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--bone-dim);
+  font-size: 13px;
+  font-weight: 800;
+}
+.item-row-meta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 11px;
+}
+.item-row button,
+.item-clear {
+  width: auto;
+  flex: none;
+  padding: 5px 8px;
+  color: var(--bone-dim);
+  background: var(--surface-2);
+  border-color: var(--line);
+  border-radius: 999px;
+}
+.item-clear {
+  width: 100%;
+  margin-top: 9px;
+}
+.item-row button:hover,
+.item-clear:hover {
+  color: var(--bone);
+  border-color: var(--muted);
+  filter: none;
 }
 
 .notify-state { font-size: 13px; color: var(--bone-dim); margin: 0 0 12px; }

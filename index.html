@@ -35,6 +35,17 @@
       <span class="control-label">Size</span>
       <div class="chips" id="size-chips"></div>
     </div>
+    <div class="control-group">
+      <span class="control-label">Quick</span>
+      <div class="chips">
+        <button class="chip" type="button" id="new-filter" aria-pressed="false">
+          New<span class="n" id="new-count">0</span>
+        </button>
+        <button class="chip" type="button" id="watched-filter" aria-pressed="false">
+          Watched<span class="n" id="watched-count">0</span>
+        </button>
+      </div>
+    </div>
     <div class="control-group sort">
       <span class="control-label">Sort</span>
       <select id="sort">
@@ -79,6 +90,20 @@
     <a class="notify-btn" id="notify-link" href="#" target="_blank" rel="noopener">Subscribe in ntfy</a>
     <p class="notify-help">Push fires when a qualifying deal is new or restocks.
        Opt in by subscribing to the topic in the ntfy app.</p>
+  </div>
+  <div class="panel" id="personal-panel">
+    <h2>Personal</h2>
+    <button type="button" class="personal-action" id="mark-all-seen">Mark all seen</button>
+    <details class="item-manager">
+      <summary>Hidden items <span id="hidden-total">0</span></summary>
+      <div class="item-list" id="hidden-items"></div>
+      <button type="button" class="item-clear" id="clear-hidden">Restore all hidden</button>
+    </details>
+    <details class="item-manager">
+      <summary>Watched items <span id="watched-total">0</span></summary>
+      <div class="item-list" id="watched-items"></div>
+      <button type="button" class="item-clear" id="clear-watched">Clear watched</button>
+    </details>
   </div>
 </aside>
 

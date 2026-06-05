@@ -9,15 +9,27 @@ const TRIAL_BRANDS = new Set(["Myles Apparel", "Straight Down", "Cuts", "Linksou
 const TRIAL_PREF = "dealRadar.includeTrialBrands";
 const DISABLED_BRANDS_PREF = "dealRadar.disabledBrands";
 const ENABLED_TRIAL_BRANDS_PREF = "dealRadar.enabledTrialBrands";
+const HIDDEN_IDS_PREF = "dealRadar.hiddenIds";
+const WATCHED_IDS_PREF = "dealRadar.watchedIds";
+const SEEN_IDS_PREF = "dealRadar.seenIds";
+const LAST_OPEN_AT_PREF = "dealRadar.lastOpenAt";
+const WATCHED_ONLY_PREF = "dealRadar.watchedOnly";
+const NEW_ONLY_PREF = "dealRadar.newOnly";
 
 const state = {
   data: null,
   brands: new Set(),
   size: "all",
   sort: "score",
+  watchedOnly: localStorage.getItem(WATCHED_ONLY_PREF) === "1",
+  newOnly: localStorage.getItem(NEW_ONLY_PREF) === "1",
   includeTrialBrands: localStorage.getItem(TRIAL_PREF) === "1",
   disabledBrands: loadSet(DISABLED_BRANDS_PREF),
   enabledTrialBrands: loadSet(ENABLED_TRIAL_BRANDS_PREF),
+  hiddenIds: loadSet(HIDDEN_IDS_PREF),
+  watchedIds: loadSet(WATCHED_IDS_PREF),
+  seenIds: loadSet(SEEN_IDS_PREF),
+  newIds: new Set(),
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -30,6 +42,7 @@ async function init() {
     const res = await fetch(CFG.DEALS_URL || "./deals.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     state.data = await res.json();
+    captureNewSinceLastOpen();
   } catch (err) {
     $("#freshness").textContent = "could not load deals";
     $("#freshness").classList.add("stale");
@@ -40,6 +53,7 @@ async function init() {
   buildChips();
   setupTrialBrands();
   setupBrandManager();
+  setupPersonalization();
   $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
   $("#controls").hidden = false;
   renderGrid();
@@ -102,7 +116,7 @@ function renderSources() {
 function buildChips() {
   const deals = configuredDeals();
   const brandCounts = countBy(deals, (d) => d.brand);
-  const defaultDeals = deals.filter(isDefaultVisible);
+  const defaultDeals = deals.filter((d) => isDefaultVisible(d) && passesItemFilters(d));
   const sizeCounts = countBy(defaultDeals, (d) => d.size_bucket);
 
   // Brand: multi-select. Show every configured brand (from sources), so
@@ -119,6 +133,7 @@ function buildChips() {
   buildSizeChips($("#size-chips"),
     [["all", "All", defaultDeals.length], ...Object.entries(sizeCounts)
       .sort((a, b) => b[1] - a[1]).map(([k, n]) => [k, SIZE_LABELS[k] || k, n])]);
+  updateQuickFilterButtons();
 }
 
 function buildBrandChips(container, entries) {
@@ -170,6 +185,7 @@ function renderGrid() {
   const grid = $("#grid");
   let deals = configuredDeals().filter((d) =>
     isBrandVisibleName(d.brand) &&
+    passesItemFilters(d) &&
     (state.brands.size > 0 ? state.brands.has(d.brand) : true) &&
     (state.size === "all" || d.size_bucket === state.size));
 
@@ -202,30 +218,63 @@ function sortDeals(deals, mode) {
 }
 
 function card(d, i) {
-  const a = document.createElement("a");
-  a.className = "card";
-  a.href = d.url; a.target = "_blank"; a.rel = "noopener";
-  a.style.animationDelay = `${Math.min(i * 28, 600)}ms`;
+  const article = document.createElement("article");
+  const watched = state.watchedIds.has(d.id);
+  const isNew = state.newIds.has(d.id);
+  article.className = "card" + (watched ? " is-watched" : "") + (isNew ? " is-new" : "");
+  article.style.animationDelay = `${Math.min(i * 28, 600)}ms`;
   const hot = d.discount_percent >= 50 ? " hot" : "";
   const img = d.image
     ? `<img src="${escapeAttr(d.image)}" alt="${escapeAttr(d.title)}" loading="lazy" />`
     : `<div style="width:100%;height:100%"></div>`;
-  a.innerHTML =
-    `<div class="card-media">
-       ${img}
-       <span class="badge${hot}">-${d.discount_percent}%</span>
-       <span class="size-pill">${escapeHtml(SIZE_LABELS[d.size_bucket] || d.size_label)}</span>
-     </div>
-     <div class="card-body">
-       <span class="card-brand">${escapeHtml(d.brand)}</span>
-       <span class="card-title">${escapeHtml(d.title)}</span>
-       <div class="price-row">
-         <span class="price-now">$${fmt(d.sale_price)}</span>
-         <span class="price-was">$${fmt(d.list_price)}</span>
-         <span class="confidence">${escapeHtml(d.confidence)}</span>
+  article.innerHTML =
+    `<a class="card-main" href="${escapeAttr(d.url)}" target="_blank" rel="noopener">
+       <div class="card-media">
+         ${img}
+         <span class="badge${hot}">-${d.discount_percent}%</span>
+         <span class="size-pill">${escapeHtml(SIZE_LABELS[d.size_bucket] || d.size_label)}</span>
+         <span class="item-markers">
+           ${isNew ? `<span class="marker new">New</span>` : ""}
+           ${watched ? `<span class="marker watched">★</span>` : ""}
+         </span>
+       </div>
+       <div class="card-body">
+         <span class="card-brand">${escapeHtml(d.brand)}</span>
+         <span class="card-title">${escapeHtml(d.title)}</span>
+         <div class="price-row">
+           <span class="price-now">$${fmt(d.sale_price)}</span>
+           <span class="price-was">$${fmt(d.list_price)}</span>
+           <span class="confidence">${escapeHtml(d.confidence)}</span>
+         </div>
+       </div>
+     </a>
+     <div class="card-actions">
+       <button type="button" class="card-menu-button" aria-expanded="false"
+               aria-label="Actions for ${escapeAttr(d.title)}">⋯</button>
+       <div class="card-menu" hidden>
+         <button type="button" data-action="watch">${watched ? "Unwatch" : "Watch this"}</button>
+         <button type="button" data-action="hide">Hide this</button>
        </div>
      </div>`;
-  return a;
+
+  const menuButton = article.querySelector(".card-menu-button");
+  const menu = article.querySelector(".card-menu");
+  menuButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleCardMenu(menuButton, menu);
+  });
+  article.querySelector('[data-action="watch"]').addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWatched(d.id);
+  });
+  article.querySelector('[data-action="hide"]').addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    hideDeal(d.id);
+  });
+  return article;
 }
 
 /* ---------- notifications (read-only status) ---------- */
@@ -266,6 +315,33 @@ function setupBrandManager() {
     saveSet(ENABLED_TRIAL_BRANDS_PREF, state.enabledTrialBrands);
     refreshBrandSettings();
   });
+}
+
+function setupPersonalization() {
+  $("#new-filter")?.addEventListener("click", () => {
+    state.newOnly = !state.newOnly;
+    localStorage.setItem(NEW_ONLY_PREF, state.newOnly ? "1" : "0");
+    refreshPersonalization();
+  });
+  $("#watched-filter")?.addEventListener("click", () => {
+    state.watchedOnly = !state.watchedOnly;
+    localStorage.setItem(WATCHED_ONLY_PREF, state.watchedOnly ? "1" : "0");
+    refreshPersonalization();
+  });
+  $("#mark-all-seen")?.addEventListener("click", markAllSeen);
+  $("#clear-hidden")?.addEventListener("click", () => {
+    state.hiddenIds.clear();
+    saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+    refreshPersonalization();
+  });
+  $("#clear-watched")?.addEventListener("click", () => {
+    state.watchedIds.clear();
+    saveSet(WATCHED_IDS_PREF, state.watchedIds);
+    refreshPersonalization();
+  });
+  document.addEventListener("click", closeCardMenus);
+  renderPersonalLists();
+  updateQuickFilterButtons();
 }
 
 function renderBrandManager() {
@@ -321,7 +397,114 @@ function refreshBrandSettings() {
   buildChips();
   renderSources();
   renderBrandManager();
+  renderPersonalLists();
   renderGrid();
+}
+
+function toggleCardMenu(button, menu) {
+  const opening = menu.hidden;
+  closeCardMenus();
+  menu.hidden = !opening;
+  button.setAttribute("aria-expanded", String(opening));
+}
+
+function closeCardMenus() {
+  document.querySelectorAll(".card-menu").forEach((menu) => { menu.hidden = true; });
+  document.querySelectorAll(".card-menu-button").forEach((button) => {
+    button.setAttribute("aria-expanded", "false");
+  });
+}
+
+function hideDeal(id) {
+  state.hiddenIds.add(id);
+  saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+  refreshPersonalization();
+}
+
+function restoreDeal(id) {
+  state.hiddenIds.delete(id);
+  saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+  refreshPersonalization();
+}
+
+function toggleWatched(id) {
+  if (state.watchedIds.has(id)) state.watchedIds.delete(id);
+  else state.watchedIds.add(id);
+  saveSet(WATCHED_IDS_PREF, state.watchedIds);
+  refreshPersonalization();
+}
+
+function markAllSeen() {
+  state.newIds.clear();
+  state.seenIds = new Set(rawConfiguredDeals().map((d) => d.id));
+  state.newOnly = false;
+  saveSet(SEEN_IDS_PREF, state.seenIds);
+  localStorage.setItem(LAST_OPEN_AT_PREF, new Date().toISOString());
+  localStorage.setItem(NEW_ONLY_PREF, "0");
+  refreshPersonalization();
+}
+
+function refreshPersonalization() {
+  closeCardMenus();
+  buildChips();
+  renderBrandManager();
+  renderPersonalLists();
+  renderGrid();
+}
+
+function updateQuickFilterButtons() {
+  const newButton = $("#new-filter");
+  const watchedButton = $("#watched-filter");
+  if (!newButton || !watchedButton) return;
+  newButton.setAttribute("aria-pressed", String(state.newOnly));
+  watchedButton.setAttribute("aria-pressed", String(state.watchedOnly));
+  $("#new-count").textContent = String(itemCount((d) => state.newIds.has(d.id)));
+  $("#watched-count").textContent = String(itemCount((d) => state.watchedIds.has(d.id)));
+}
+
+function renderPersonalLists() {
+  renderItemList($("#hidden-items"), currentHiddenDeals(), {
+    empty: "No hidden items.",
+    action: "Restore",
+    handler: restoreDeal,
+  });
+  renderItemList($("#watched-items"), currentWatchedDeals(), {
+    empty: "No watched items.",
+    action: "Unwatch",
+    handler: toggleWatched,
+  });
+  const hiddenCount = $("#hidden-total");
+  const watchedTotal = $("#watched-total");
+  if (hiddenCount) hiddenCount.textContent = String(state.hiddenIds.size);
+  if (watchedTotal) watchedTotal.textContent = String(state.watchedIds.size);
+}
+
+function renderItemList(root, entries, { empty, action, handler }) {
+  if (!root) return;
+  root.innerHTML = "";
+  if (!entries.length) {
+    const p = document.createElement("p");
+    p.className = "item-list-empty";
+    p.textContent = empty;
+    root.appendChild(p);
+    return;
+  }
+  for (const { id, deal } of entries) {
+    const row = document.createElement("div");
+    row.className = "item-row";
+    const title = deal ? deal.title : id;
+    const meta = deal
+      ? `${deal.brand} · ${SIZE_LABELS[deal.size_bucket] || deal.size_label} · $${fmt(deal.sale_price)}`
+      : "Not in current feed";
+    row.innerHTML =
+      `<span class="item-row-text">
+         <span class="item-row-title">${escapeHtml(title)}</span>
+         <span class="item-row-meta">${escapeHtml(meta)}</span>
+       </span>
+       <button type="button">${escapeHtml(action)}</button>`;
+    row.querySelector("button").addEventListener("click", () => handler(id));
+    root.appendChild(row);
+  }
 }
 
 /* ---------- helpers ---------- */
@@ -339,10 +522,39 @@ function isBrandVisibleName(brand) {
 function configuredBrandNames() {
   return new Set((state.data?.sources || []).map((s) => s.brand));
 }
-function configuredDeals() {
+function rawConfiguredDeals() {
   const configured = configuredBrandNames();
   return (state.data?.deals || []).filter((d) =>
     d.in_stock === true && (configured.size === 0 || configured.has(d.brand)));
+}
+function configuredDeals() {
+  return rawConfiguredDeals().filter((d) => !state.hiddenIds.has(d.id));
+}
+function passesItemFilters(deal) {
+  if (state.watchedOnly && !state.watchedIds.has(deal.id)) return false;
+  if (state.newOnly && !state.newIds.has(deal.id)) return false;
+  return true;
+}
+function itemCount(predicate) {
+  return configuredDeals().filter((d) => isBrandVisibleName(d.brand) && predicate(d)).length;
+}
+function currentHiddenDeals() {
+  const byId = dealMap(rawConfiguredDeals());
+  return [...state.hiddenIds].sort().map((id) => ({ id, deal: byId.get(id) || null }));
+}
+function currentWatchedDeals() {
+  const byId = dealMap(rawConfiguredDeals());
+  return [...state.watchedIds].sort().map((id) => ({ id, deal: byId.get(id) || null }));
+}
+function dealMap(deals) {
+  return new Map(deals.map((d) => [d.id, d]));
+}
+function captureNewSinceLastOpen() {
+  const currentIds = new Set(rawConfiguredDeals().map((d) => d.id));
+  state.newIds = new Set([...currentIds].filter((id) => !state.seenIds.has(id)));
+  state.seenIds = currentIds;
+  saveSet(SEEN_IDS_PREF, state.seenIds);
+  localStorage.setItem(LAST_OPEN_AT_PREF, new Date().toISOString());
 }
 function loadSet(key) {
   try {
@@ -358,7 +570,8 @@ function countBy(arr, fn) {
   return arr.reduce((acc, x) => { const k = fn(x); acc[k] = (acc[k] || 0) + 1; return acc; }, {});
 }
 function anyActiveFilter() {
-  return state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0;
+  return state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0 ||
+    state.watchedOnly || state.newOnly || state.hiddenIds.size > 0;
 }
 function fmt(n) { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) =>
