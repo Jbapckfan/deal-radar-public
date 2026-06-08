@@ -5,6 +5,33 @@
 
 const CFG = window.DEAL_RADAR_CONFIG || {};
 const SIZE_LABELS = { medium: "Medium", "34x32": "34×32", short_34: "34 Shorts", shoe_12: "Size 12", one_size: "One size" };
+const VERTICAL_LABELS = { apparel: "Clothes", gear: "Gear", electronics: "Tech" };
+const GARMENT_LABELS = {
+  tee: "Tees",
+  polo: "Polos",
+  shirt: "Shirts",
+  long_sleeve: "Long sleeve",
+  quarter_zip: "Quarter zips",
+  hoodie: "Hoodies",
+  sweatshirt: "Sweatshirts",
+  sweater: "Sweaters",
+  outerwear: "Outerwear",
+  shorts: "Shorts",
+  pants: "Pants",
+  joggers: "Joggers",
+  footwear: "Shoes",
+  hat: "Hats",
+  accessory: "Accessories",
+  other: "Other",
+};
+const GEAR_LABELS = {
+  knife: "Knives",
+  cooler: "Coolers",
+  drinkware: "Drinkware",
+  accessory: "Accessories",
+  tech: "Tech",
+  other: "Other",
+};
 const TRIAL_BRANDS = new Set(["Myles Apparel", "Straight Down", "Cuts", "Linksoul", "True Classic"]);
 const TRIAL_PREF = "dealRadar.includeTrialBrands";
 const DISABLED_BRANDS_PREF = "dealRadar.disabledBrands";
@@ -19,6 +46,9 @@ const NEW_ONLY_PREF = "dealRadar.newOnly";
 const state = {
   data: null,
   brands: new Set(),
+  vertical: "all",
+  garment: "all",
+  gearType: "all",
   size: "all",
   sort: "score",
   watchedOnly: localStorage.getItem(WATCHED_ONLY_PREF) === "1",
@@ -117,7 +147,17 @@ function buildChips() {
   const deals = configuredDeals();
   const brandCounts = countBy(deals, (d) => d.brand);
   const defaultDeals = deals.filter((d) => isDefaultVisible(d) && passesItemFilters(d));
-  const sizeCounts = countBy(defaultDeals, (d) => d.size_bucket);
+  const taxonomyDeals = defaultDeals.filter(passesTaxonomyFilters);
+  const apparelDeals = taxonomyDeals.filter((d) => verticalOf(d) === "apparel");
+  const sizeCounts = countBy(apparelDeals, (d) => d.size_bucket);
+  const verticalCounts = countBy(defaultDeals, verticalOf);
+  const garmentBase = defaultDeals.filter((d) => verticalOf(d) === "apparel");
+  const gearBase = defaultDeals.filter((d) =>
+    state.vertical === "gear" || state.vertical === "electronics"
+      ? verticalOf(d) === state.vertical
+      : verticalOf(d) !== "apparel");
+  const garmentCounts = countBy(garmentBase, garmentOf);
+  const gearCounts = countBy(gearBase, gearTypeOf);
 
   // Brand: multi-select. Show every configured brand (from sources), so
   // zero-deal brands still appear. "All" clears the selection.
@@ -129,9 +169,54 @@ function buildChips() {
     [["all", "All", defaultDeals.length, false],
       ...brandNames.map((b) => [b, b, brandCounts[b] || 0, TRIAL_BRANDS.has(b)])]);
 
+  buildFilterChips($("#vertical-chips"),
+    [["all", "All", defaultDeals.length],
+      ...Object.entries(verticalCounts)
+        .sort(([a], [b]) => verticalOrder(a) - verticalOrder(b))
+        .map(([k, n]) => [k, VERTICAL_LABELS[k] || titleCase(k), n])],
+    state.vertical,
+    (value) => {
+      state.vertical = value;
+      state.garment = "all";
+      state.gearType = "all";
+      if (state.vertical !== "apparel") state.size = "all";
+      buildChips();
+      renderGrid();
+    });
+
+  const showGarments = state.vertical === "all" || state.vertical === "apparel";
+  const showGearTypes = state.vertical === "all" || state.vertical !== "apparel";
+  $("#size-group").hidden = state.vertical !== "all" && state.vertical !== "apparel";
+  $("#garment-group").hidden = !showGarments || Object.keys(garmentCounts).length === 0;
+  $("#gear-group").hidden = !showGearTypes || Object.keys(gearCounts).length === 0;
+  buildFilterChips($("#garment-chips"),
+    [["all", "All", garmentBase.length],
+      ...Object.entries(garmentCounts)
+        .sort((a, b) => b[1] - a[1] || labelForGarment(a[0]).localeCompare(labelForGarment(b[0])))
+        .map(([k, n]) => [k, labelForGarment(k), n])],
+    state.garment,
+    (value) => {
+      state.garment = value;
+      if (value !== "all") state.vertical = "apparel";
+      buildChips();
+      renderGrid();
+    });
+  buildFilterChips($("#gear-chips"),
+    [["all", "All", gearBase.length],
+      ...Object.entries(gearCounts)
+        .sort((a, b) => b[1] - a[1] || labelForGear(a[0]).localeCompare(labelForGear(b[0])))
+        .map(([k, n]) => [k, labelForGear(k), n])],
+    state.gearType,
+    (value) => {
+      state.gearType = value;
+      if (value !== "all" && state.vertical === "apparel") state.vertical = "all";
+      buildChips();
+      renderGrid();
+    });
+
   // Size: single-select (only four buckets).
   buildSizeChips($("#size-chips"),
-    [["all", "All", defaultDeals.length], ...Object.entries(sizeCounts)
+    [["all", "All", apparelDeals.length], ...Object.entries(sizeCounts)
       .sort((a, b) => b[1] - a[1]).map(([k, n]) => [k, SIZE_LABELS[k] || k, n])]);
   updateQuickFilterButtons();
 }
@@ -163,6 +248,19 @@ function refreshBrandPressed(container) {
   });
 }
 
+function buildFilterChips(container, entries, selected, select) {
+  container.innerHTML = "";
+  for (const [value, label, n] of entries) {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.dataset.value = value;
+    btn.setAttribute("aria-pressed", String(selected === value));
+    btn.innerHTML = `${escapeHtml(label)}<span class="n">${n}</span>`;
+    btn.addEventListener("click", () => select(value));
+    container.appendChild(btn);
+  }
+}
+
 function buildSizeChips(container, entries) {
   container.innerHTML = "";
   for (const [value, label, n] of entries) {
@@ -186,8 +284,9 @@ function renderGrid() {
   let deals = configuredDeals().filter((d) =>
     isBrandVisibleName(d.brand) &&
     passesItemFilters(d) &&
+    passesTaxonomyFilters(d) &&
     (state.brands.size > 0 ? state.brands.has(d.brand) : true) &&
-    (state.size === "all" || d.size_bucket === state.size));
+    passesSizeFilter(d));
 
   deals = sortDeals(deals, state.sort);
   $("#count").textContent = `${deals.length} ${deals.length === 1 ? "deal" : "deals"}`;
@@ -201,9 +300,22 @@ function renderGrid() {
     return;
   }
 
-  const frag = document.createDocumentFragment();
-  deals.forEach((d, i) => frag.appendChild(card(d, i)));
-  grid.appendChild(frag);
+  let offset = 0;
+  for (const section of dealSections(deals)) {
+    const wrap = document.createElement("section");
+    wrap.className = "deal-section";
+    wrap.innerHTML =
+      `<div class="section-head">
+         <h2>${escapeHtml(section.title)}</h2>
+         <span>${section.deals.length}</span>
+       </div>`;
+    const sectionGrid = document.createElement("div");
+    sectionGrid.className = "section-grid";
+    section.deals.forEach((d, i) => sectionGrid.appendChild(card(d, offset + i)));
+    offset += section.deals.length;
+    wrap.appendChild(sectionGrid);
+    grid.appendChild(wrap);
+  }
 }
 
 function sortDeals(deals, mode) {
@@ -217,23 +329,52 @@ function sortDeals(deals, mode) {
   return [...deals].sort(by[mode] || by.score);
 }
 
+/* Thumbnail through a free image proxy/CDN (weserv): resizes, re-encodes, and
+   caches at the edge so a merchant CDN that hotlink-blocks or 404s a dead
+   product doesn't leave a broken card. onerror falls back to the origin URL,
+   then to an empty tile. */
+function imageTag(d) {
+  if (!d.image) return `<div class="card-img-empty"></div>`;
+  const origin = escapeAttr(d.image);
+  const proxied = "https://images.weserv.nl/?url=" +
+    encodeURIComponent(d.image.replace(/^https?:\/\//, "")) + "&w=600&output=webp&we";
+  return `<img src="${proxied}" alt="${escapeAttr(d.title)}" loading="lazy"
+            data-origin="${origin}"
+            onerror="if(this.dataset.origin){this.src=this.dataset.origin;this.removeAttribute('data-origin');}else{this.replaceWith(Object.assign(document.createElement('div'),{className:'card-img-empty'}));}" />`;
+}
+
+/* The honest, decision-grade price line — observed history beats the merchant's
+   gameable compare_at. Priority: at a real low > just dropped > usual price. */
+function honestSignal(d) {
+  if (d.is_at_low && (d.history_days || 0) >= 3)
+    return { cls: "is-low", text: `Lowest in ${d.history_days}d` };
+  if (d.price_drop_percent && d.previous_price)
+    return { cls: "is-drop", text: `Dropped ${d.price_drop_percent}% since last check` };
+  if (d.typical_price && d.typical_price > d.sale_price)
+    return { cls: "is-typical", text: `usually $${fmt(d.typical_price)}` };
+  return null;
+}
+
 function card(d, i) {
   const article = document.createElement("article");
   const watched = state.watchedIds.has(d.id);
   const isNew = state.newIds.has(d.id);
-  article.className = "card" + (watched ? " is-watched" : "") + (isNew ? " is-new" : "");
+  article.className = "card" + (watched ? " is-watched" : "") + (isNew ? " is-new" : "") +
+    (verticalOf(d) !== "apparel" ? " is-gear" : "");
   article.style.animationDelay = `${Math.min(i * 28, 600)}ms`;
   const hot = d.discount_percent >= 50 ? " hot" : "";
-  const img = d.image
-    ? `<img src="${escapeAttr(d.image)}" alt="${escapeAttr(d.title)}" loading="lazy" />`
-    : `<div style="width:100%;height:100%"></div>`;
+  const signal = honestSignal(d);
+  const signalLine = signal
+    ? `<span class="card-signal ${signal.cls}">${escapeHtml(signal.text)}</span>` : "";
   article.innerHTML =
     `<a class="card-main" href="${escapeAttr(d.url)}" target="_blank" rel="noopener">
        <div class="card-media">
-         ${img}
+         ${imageTag(d)}
          <span class="badge${hot}">-${d.discount_percent}%</span>
-         <span class="size-pill">${escapeHtml(SIZE_LABELS[d.size_bucket] || d.size_label)}</span>
+         <span class="size-pill">${escapeHtml(cardTypeLabel(d))}</span>
          <span class="item-markers">
+           ${d.restocked ? `<span class="marker restock">Restocked</span>` : ""}
+           ${d.price_drop_percent ? `<span class="marker drop">↓ ${d.price_drop_percent}%</span>` : ""}
            ${isNew ? `<span class="marker new">New</span>` : ""}
            ${watched ? `<span class="marker watched">★</span>` : ""}
          </span>
@@ -241,10 +382,11 @@ function card(d, i) {
        <div class="card-body">
          <span class="card-brand">${escapeHtml(d.brand)}</span>
          <span class="card-title">${escapeHtml(d.title)}</span>
+         <span class="card-kind">${escapeHtml(cardKindLabel(d))}</span>
          <div class="price-row">
            <span class="price-now">$${fmt(d.sale_price)}</span>
            <span class="price-was">$${fmt(d.list_price)}</span>
-           <span class="confidence">${escapeHtml(d.confidence)}</span>
+           ${signalLine}
          </div>
        </div>
      </a>
@@ -535,8 +677,59 @@ function passesItemFilters(deal) {
   if (state.newOnly && !state.newIds.has(deal.id)) return false;
   return true;
 }
+function passesTaxonomyFilters(deal) {
+  const vertical = verticalOf(deal);
+  if (state.vertical !== "all" && vertical !== state.vertical) return false;
+  if (state.garment !== "all" && garmentOf(deal) !== state.garment) return false;
+  if (state.gearType !== "all" && gearTypeOf(deal) !== state.gearType) return false;
+  return true;
+}
+function passesSizeFilter(deal) {
+  if (state.size === "all") return true;
+  if (verticalOf(deal) !== "apparel") return true;
+  return deal.size_bucket === state.size;
+}
 function itemCount(predicate) {
   return configuredDeals().filter((d) => isBrandVisibleName(d.brand) && predicate(d)).length;
+}
+function verticalOf(deal) {
+  return deal.vertical || "apparel";
+}
+function garmentOf(deal) {
+  return deal.garment || deal.category || "other";
+}
+function gearTypeOf(deal) {
+  return deal.gear_type || (verticalOf(deal) === "electronics" ? "tech" : "other");
+}
+function labelForGarment(value) {
+  return GARMENT_LABELS[value] || titleCase(value);
+}
+function labelForGear(value) {
+  return GEAR_LABELS[value] || titleCase(value);
+}
+function verticalOrder(value) {
+  return { apparel: 0, gear: 1, electronics: 2 }[value] ?? 9;
+}
+function cardTypeLabel(deal) {
+  return verticalOf(deal) === "apparel"
+    ? (SIZE_LABELS[deal.size_bucket] || deal.size_label)
+    : cardKindLabel(deal);
+}
+function cardKindLabel(deal) {
+  if (verticalOf(deal) === "apparel") return labelForGarment(garmentOf(deal));
+  if (verticalOf(deal) === "electronics") return labelForGear(gearTypeOf(deal));
+  return labelForGear(gearTypeOf(deal));
+}
+function dealSections(deals) {
+  if (state.vertical !== "all") {
+    return [{ title: VERTICAL_LABELS[state.vertical] || titleCase(state.vertical), deals }];
+  }
+  const apparel = deals.filter((d) => verticalOf(d) === "apparel");
+  const gear = deals.filter((d) => verticalOf(d) !== "apparel");
+  const sections = [];
+  if (apparel.length) sections.push({ title: "Clothes", deals: apparel });
+  if (gear.length) sections.push({ title: "Gear & Tech", deals: gear });
+  return sections;
 }
 function currentHiddenDeals() {
   const byId = dealMap(rawConfiguredDeals());
@@ -571,7 +764,13 @@ function countBy(arr, fn) {
 }
 function anyActiveFilter() {
   return state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0 ||
-    state.watchedOnly || state.newOnly || state.hiddenIds.size > 0;
+    state.watchedOnly || state.newOnly || state.hiddenIds.size > 0 ||
+    state.vertical !== "all" || state.garment !== "all" || state.gearType !== "all";
+}
+function titleCase(s) {
+  return String(s || "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 function fmt(n) { return Number(n).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) =>
