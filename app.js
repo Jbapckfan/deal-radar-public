@@ -26,8 +26,11 @@ const GARMENT_LABELS = {
 };
 const GEAR_LABELS = {
   knife: "Knives",
+  light: "Lights",
   cooler: "Coolers",
   drinkware: "Drinkware",
+  hat: "Hats",
+  bag: "Bags",
   accessory: "Accessories",
   tech: "Tech",
   other: "Other",
