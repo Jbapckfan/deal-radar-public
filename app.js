@@ -162,10 +162,11 @@ function buildChips() {
   const garmentCounts = countBy(garmentBase, garmentOf);
   const gearCounts = countBy(gearBase, gearTypeOf);
 
-  // Brand: multi-select. Show every configured brand (from sources), so
-  // zero-deal brands still appear. "All" clears the selection.
-  const sourceBrands = (state.data.sources || []).map((s) => s.brand);
-  const brandNames = [...new Set(sourceBrands)]
+  // Brand: multi-select. Source names are merchant health identities, while a
+  // multi-brand retailer's deals use the product vendor (for example, source
+  // "Gazelle Sports" -> deal brand "On"). Include both or retailer deals would
+  // be silently hidden and impossible to select. "All" clears the selection.
+  const brandNames = [...configuredBrandNames()]
     .filter((b) => isBrandVisibleName(b) || state.brands.has(b))
     .sort((a, b) => (brandCounts[b] || 0) - (brandCounts[a] || 0) || a.localeCompare(b));
   buildBrandChips($("#brand-chips"),
@@ -665,7 +666,9 @@ function isBrandVisibleName(brand) {
   return true;
 }
 function configuredBrandNames() {
-  return new Set((state.data?.sources || []).map((s) => s.brand));
+  const sourceBrands = (state.data?.sources || []).map((s) => s.brand);
+  const dealBrands = (state.data?.deals || []).map((d) => d.brand);
+  return new Set([...sourceBrands, ...dealBrands]);
 }
 function rawConfiguredDeals() {
   const configured = configuredBrandNames();
