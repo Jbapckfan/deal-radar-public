@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-07T00:46:38Z",
+  "generated_at": "2026-08-07T01:52:46Z",
   "kind": "kickstarter",
   "projects": [
     {
@@ -8,95 +8,40 @@
       "name": "Disk Pro 2\u4e28Ultimate Choice Cooling Hub for EDC Devices",
       "blurb": "6-ports\u4e28Ice-storm Cooler\u4e28Magnetic Attachment\u4e28Pocket Size\u4e284 Control Chips\u4e28Max 8TB| Swappable SSD \u4e2810Gbps\u4e28HDMI 2.1\u4e28Lanyard Cable",
       "category": "Gadgets",
-      "percent_funded": 13803,
-      "backers": 6931,
+      "percent_funded": 13808,
+      "backers": 6933,
       "image": "https://i.kickstarter.com/assets/054/293/876/fa4c839076f59d43167bf7b37eb871a6_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1782879397&width=560&sig=xSfftcv33CWpceEqyNAdH3aFq6ADbljP7rbFZCHjiR4%3D",
       "url": "https://www.kickstarter.com/projects/shargetech/disk-pro-2",
       "deadline": "2026-08-16T13:59:28Z"
-    },
-    {
-      "id": "431631346",
-      "name": "Cladist Titan: Sorry, Old Driver. The Guesswork Era Is Over.",
-      "blurb": "15+1 Torque Levels | 0.05\u20130.8 N\u00b7m Precision Control | Low Runout | Electric & Manual Dual Mode | Magnetic Storage | 48 Bits | 500mAh",
-      "category": "Product Design",
-      "percent_funded": 18691,
-      "backers": 4154,
-      "image": "https://i.kickstarter.com/assets/054/587/884/222fd5d9aaa4f1d7f418c787ebaa8a4e_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785297885&width=560&sig=XPsrXt%2FUH6ykqspzFcebQEWWgIOuKg0yodU8Udk81ms%3D",
-      "url": "https://www.kickstarter.com/projects/cladist/cladist-titan-15-1-torque-redefines-power-and-precision",
-      "deadline": "2026-08-13T14:00:07Z"
-    },
-    {
-      "id": "1875596447",
-      "name": "Meet Beni, Your First All-Terrain Camera Robot",
-      "blurb": "4K Imaging | Smart Auto-following | 17.9 mph Max Speed | 10-inch Max Obstacle Jumping | Auto-edited Highlights",
-      "category": "Camera Equipment",
-      "percent_funded": 5133,
-      "backers": 4102,
-      "image": "https://i.kickstarter.com/assets/054/369/924/7ac7cd8573ffc7be3b6db54a2aecda36_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783491210&width=560&sig=cv7UzpXrRnFIpsfNLOM0do9tvpO5oR%2FFNqfxA1Sjoss%3D",
-      "url": "https://www.kickstarter.com/projects/mondorobotics/beni-all-terrain-camera-robot",
-      "deadline": "2026-09-06T14:45:09Z"
-    },
-    {
-      "id": "863980289",
-      "name": "Breakfast, automated",
-      "blurb": "Never skip breakfast again with EGOR and TOASTR, your egg cooking robot and synchronized toaster.",
-      "category": "Product Design",
-      "percent_funded": 880,
-      "backers": 3643,
-      "image": "https://i.kickstarter.com/assets/054/240/975/b5c1a3efd7681be0cb7b5048555697c5_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1782448906&width=560&sig=2rLsVPripnwLQcyI8nZCSUcWjgqHpomCg4hnZWNBoDQ%3D",
-      "url": "https://www.kickstarter.com/projects/cheffy/breakfast-automated",
-      "deadline": "2026-08-28T22:00:00Z"
     },
     {
       "id": "1216276219",
       "name": "AP30 Music Boy: The First Truly Wearable Hi-Res Music Player",
       "blurb": "Game Boy-inspired Design Meets Hi-Res Audio (DSD256, PCM 24bit/192kHz)| Whale-Inspired Backplate| Magnetic Phone Snap| Pixel Block Game",
       "category": "Sound",
-      "percent_funded": 7650,
-      "backers": 3266,
+      "percent_funded": 7672,
+      "backers": 3273,
       "image": "https://i.kickstarter.com/assets/054/612/170/c755ea0c4c9f41600945517da55c785b_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785484547&width=560&sig=wkjUHklc0w%2F107f1t62aI588OLXU40LpyPx9EtlBmPw%3D",
       "url": "https://www.kickstarter.com/projects/hidizs/ap30-music-boy-the-first-truly-wearable-hi-res-music-player",
       "deadline": "2026-08-17T14:30:08Z"
-    },
-    {
-      "id": "1542195646",
-      "name": "ZERA mini - The True Card-Sized Cooling Fan",
-      "blurb": "TRUE Card-Sized | 13m/s Windspeed | 30,000RPM | 360\u00b0 Rotatable | Intuitive Display | 69g Ultralight | 10 hrs+ Run Time | All-Day Cool",
-      "category": "Product Design",
-      "percent_funded": 5689,
-      "backers": 3062,
-      "image": "https://i.kickstarter.com/assets/054/649/132/46348f22c767d650a4d8a1cea59a9ed6_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785832892&width=560&sig=y7tVpPFRJCy%2Fv27LKWQ7wRuFI9An4midmFbIHIGp0bg%3D",
-      "url": "https://www.kickstarter.com/projects/zerasonic/zera-mini",
-      "deadline": "2026-08-11T12:44:59Z"
     },
     {
       "id": "1114436418",
       "name": "HeyGears G1 Series: First Desktop Full-Color 3D & UV Printer",
       "blurb": "Full-Color 3D Printing|10M+ Colors|Full-Color & Transparent in One Print|Anti-Clog Design|Auto-Calibration|3X Faster in UV Printing",
       "category": "DIY Electronics",
-      "percent_funded": 11521,
-      "backers": 2714,
+      "percent_funded": 11526,
+      "backers": 2715,
       "image": "https://i.kickstarter.com/assets/054/670/057/b9914f92206c2892d45045e9afb19d75_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785981181&width=560&sig=IBivqUERjH1x1PaTqV5NJehQQmAx8leMEP1PuprQHNk%3D",
       "url": "https://www.kickstarter.com/projects/heygears/heygears-g1-series-first-desktop-full-color-3d-and-uv-printer",
       "deadline": "2026-09-11T15:45:08Z"
-    },
-    {
-      "id": "1065780157",
-      "name": "Field Bracket by Peak Design",
-      "blurb": "A family of modular, camera-specific L-brackets and accessories that add tracking and game-changing functionality.",
-      "category": "Product Design",
-      "percent_funded": 1174,
-      "backers": 2672,
-      "image": "https://i.kickstarter.com/assets/054/507/129/6e287fe6d7d7be9b1e917a9775a200e6_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784639447&width=560&sig=r%2BfA9%2FQ3TsDsJXZitqO7niIV4qmqprpP0eXs8HTyXNw%3D",
-      "url": "https://www.kickstarter.com/projects/peak-design/field-bracket-by-peak-design",
-      "deadline": "2026-08-21T07:00:00Z"
     },
     {
       "id": "183930012",
       "name": "PixelMug S1 Series \u2014 The Most Playable Mug Ever",
       "blurb": "Interactive Pixel Display | Mini Games | Music Reactive Visuals | Smart Desk Assistant | App Ecosystem | Open SDK | 350ml Everyday Mug",
       "category": "Gadgets",
-      "percent_funded": 6386,
+      "percent_funded": 6388,
       "backers": 2287,
       "image": "https://i.kickstarter.com/assets/054/564/911/8a43712b0c35291aea745199f6ac9e46_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785139200&width=560&sig=nGmIZReBR18%2FMZY1jOUnfjJD0ZneOf3lfLOQIipQklo%3D",
       "url": "https://www.kickstarter.com/projects/pixelmug/pixelmug-s1-series-the-most-playable-mug-ever",
@@ -114,56 +59,12 @@
       "deadline": "2026-08-27T14:00:54Z"
     },
     {
-      "id": "197984630",
-      "name": "Magnetic Camera Straps By WANDRD",
-      "blurb": "Camera Straps Reinvented: Magnetically Guided for Speed, Built for Security, and Stores on Your Body",
-      "category": "Product Design",
-      "percent_funded": 842,
-      "backers": 1824,
-      "image": "https://i.kickstarter.com/assets/054/509/154/fe547e64e0e5ae800eb88c234a9c555e_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784649157&width=560&sig=JLnWJCKgEQl8kXR0dDGEX30ZM2FhiJsQkl4Me9fHye0%3D",
-      "url": "https://www.kickstarter.com/projects/wandrd/magnetic-camera-straps",
-      "deadline": "2026-08-14T05:59:00Z"
-    },
-    {
-      "id": "856456235",
-      "name": "Roam SodaTop\u2122: Make Sparkling Water Anywhere, Anytime",
-      "blurb": "Carbonates in 3 Seconds | 32 oz | Triple Insulated | Keeps Cold for 24 hrs | Wide-Mouth | Award-Winning Design | Compact & Portable",
-      "category": "Product Design",
-      "percent_funded": 2246,
-      "backers": 1378,
-      "image": "https://i.kickstarter.com/assets/054/579/684/ec1324aa17a9ba892af1da7c2f855971_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785241668&width=560&sig=IroQgJYqEl%2FUp2Ejotq%2FIt7o6TDG9I7OGw5pPYZ5HR0%3D",
-      "url": "https://www.kickstarter.com/projects/roamwater/roam-sodatop",
-      "deadline": "2026-08-28T13:57:43Z"
-    },
-    {
-      "id": "16650501",
-      "name": "DEEP ROCK GALACTIC - Metal Pickaxe Replica + New Merch",
-      "blurb": "Ghost Ship and Heroic Replicas present: Heavy Metal Replicas and Delving Gear, from the world of Deep Rock Galactic. Rock and Stone!",
-      "category": "Product Design",
-      "percent_funded": 770,
-      "backers": 1250,
-      "image": "https://i.kickstarter.com/assets/054/324/937/72ea7048fb1ab17833bb696690879a16_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783102219&width=560&sig=UVXiBYtuvwhUgGkUdeF%2FqKMv%2FSbteRHE3XPOPI2KyRg%3D",
-      "url": "https://www.kickstarter.com/projects/heroicreplicas/deep-rock-galactic-metal-pickaxe-replica-new-merch",
-      "deadline": "2026-09-02T15:00:00Z"
-    },
-    {
-      "id": "1141675002",
-      "name": "SYITREN RM1: Frame Your Music, A Living Art CD Player",
-      "blurb": "Transparent Frame | Album Display | Hi-Fi Audio Output | Bluetooth & AUX | Anti-Shock Playback | Wall & Desk Mount",
-      "category": "Product Design",
-      "percent_funded": 4175,
-      "backers": 1156,
-      "image": "https://i.kickstarter.com/assets/054/652/193/1c4efd403e868febe92a45130fc8ac02_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785851830&width=560&sig=qae96hXtq%2FLK2CZcDpPlfLdgmqTXskObU0QvdUsXTh4%3D",
-      "url": "https://www.kickstarter.com/projects/syitrenaudio/syitren-rm1-frame-your-music-live-art-cd-player",
-      "deadline": "2026-09-02T14:00:16Z"
-    },
-    {
       "id": "985382277",
       "name": "OddCube Air Purifier Kit",
       "blurb": "Build it. Display it. Breathe easy.",
       "category": "Gadgets",
       "percent_funded": 384,
-      "backers": 1053,
+      "backers": 1055,
       "image": "https://i.kickstarter.com/assets/054/567/008/a7af239fc6f8b436af5d28f6c016afe4_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785153020&width=560&sig=R%2FZt%2B4n2TfRIciqDgZPyzHiN32lXl0UI5aXZ7pKaEBM%3D",
       "url": "https://www.kickstarter.com/projects/joelcreates/oddcube-air-purifier-kit",
       "deadline": "2026-08-07T20:06:54Z"
@@ -173,44 +74,22 @@
       "name": "URXR One: Lightweight Spatial Display Glasses",
       "blurb": "6DoF room-scale tracking, hand-gesture recognition, and high-fidelity video see-through, all in a 93-gram frame.",
       "category": "Wearables",
-      "percent_funded": 1336,
-      "backers": 856,
+      "percent_funded": 1340,
+      "backers": 858,
       "image": "https://i.kickstarter.com/assets/054/596/507/4da15d9ec21a99f9bd8685f5c0a96ac4_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785354973&width=560&sig=8uvP7%2BoSQi6QbP52egpkVB0RtSTbzAEnWZSutUCNRJg%3D",
       "url": "https://www.kickstarter.com/projects/urxrone-glasses/urxr-one-lightweight-spatial-display-glasses",
       "deadline": "2026-09-18T15:00:26Z"
     },
     {
-      "id": "562073999",
-      "name": "Collectorium: Trade. Display. Protect.",
-      "blurb": "A modular system built for TCG players, pin traders, and every collector who's been making do. Your fandom deserves a home.",
-      "category": "Product Design",
-      "percent_funded": 1464,
-      "backers": 754,
-      "image": "https://i.kickstarter.com/assets/054/436/322/150257bafa767b9a192b585154122ee3_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784045726&width=560&sig=oUDQGfJnAQ%2FSG36IO8LEO0CTUG8DpqV6M5vVTirumIU%3D",
-      "url": "https://www.kickstarter.com/projects/antsylabs/collectorium-trade-display-protect",
-      "deadline": "2026-09-04T01:00:00Z"
-    },
-    {
-      "id": "1607254258",
-      "name": "Litejam Neo: The World\u2019s First RGB Guitars and Bass",
-      "blurb": "See chords, scales, fingerpicking, and songs directly on your fretboard. Learn faster. Play with confidence and perform anywhere.",
+      "id": "1582479015",
+      "name": "XPOLAR C1\u2014Smart Cushion That Cools, Heats, and Adapts to You",
+      "blurb": "Active cooling, posture awareness, and intelligent sitting insights\u2014all designed to make long hours of sitting more comfortable.",
       "category": "Hardware",
-      "percent_funded": 3097,
-      "backers": 677,
-      "image": "https://i.kickstarter.com/assets/054/664/959/c31b6151f6adb77fbab99e8e1a9496a7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785942587&width=560&sig=85P0U1K2p%2B7AqiWajmjxYlsPDQeM7V41rN7WLXGdV%2BA%3D",
-      "url": "https://www.kickstarter.com/projects/litejam/litejam-neo-a1-the-worlds-first-rgb-acoustic-guitar",
-      "deadline": "2026-09-11T12:49:54Z"
-    },
-    {
-      "id": "661445287",
-      "name": "Smart Belt 2026 - A leap in comfort and elegance unequaled.",
-      "blurb": "Italian leather belt with 32 micro-adjustments, cut-to-size system, and a Kevlar core. A belt all Kickstarter backers know.",
-      "category": "Product Design",
-      "percent_funded": 629,
-      "backers": 528,
-      "image": "https://i.kickstarter.com/assets/054/605/362/eb7fde12263e234835a155463d73b01f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785425847&width=560&sig=Q5H%2BJ4VMAk8oQIYnAb3ePgfEBa04HryIIXrT6fYaHaE%3D",
-      "url": "https://www.kickstarter.com/projects/smartbelt/smart-belt-2026-a-leap-in-comfort-and-elegance-unequaled",
-      "deadline": "2026-10-04T14:14:22Z"
+      "percent_funded": 3284,
+      "backers": 634,
+      "image": "https://i.kickstarter.com/assets/054/543/081/2a14687423d344d57ee144aed92628e5_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784888762&width=560&sig=BwHjbcUq9K2hRHoQws0564l4JrO7OGay5f%2BIVFvfeaI%3D",
+      "url": "https://www.kickstarter.com/projects/xpolar/c1-the-smart-cushion-that-cools-heats-and-adapts-to-you",
+      "deadline": "2026-09-06T14:00:11Z"
     },
     {
       "id": "703022107",
@@ -222,28 +101,6 @@
       "image": "https://i.kickstarter.com/assets/054/313/645/9c42204e3a6d02040edad88a8d38318d_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783015432&width=560&sig=NWxJFt2DiZUPTrQBbsjK5%2BOk2lO0D5L2rGnUslqqY%2FE%3D",
       "url": "https://www.kickstarter.com/projects/1638490462/paprclip-the-social-accountability-app",
       "deadline": "2026-08-13T15:58:21Z"
-    },
-    {
-      "id": "650028590",
-      "name": "Gravity Titanium Pocket Pen",
-      "blurb": "Grade 5 titanium. Chunky. XL ink capacity.",
-      "category": "Product Design",
-      "percent_funded": 154,
-      "backers": 181,
-      "image": "https://i.kickstarter.com/assets/054/603/460/9f0c4223937f02475cf8f9848361e5db_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785412062&width=560&sig=CwRWVC0gKjIp7UZWucQnRosht5SNWpC6RO6l3QpQRvA%3D",
-      "url": "https://www.kickstarter.com/projects/namisu/gravity-titanium-pocket-pen",
-      "deadline": "2026-09-05T16:57:32Z"
-    },
-    {
-      "id": "1827791716",
-      "name": "GEO: The Rotating 5 in 1 Multi-Tool, Reinvented",
-      "blurb": "A compact rotating multi-tool designed for everyday use, every small task handled. Five Tools. One Place. All in your Hand.",
-      "category": "Product Design",
-      "percent_funded": 407,
-      "backers": 159,
-      "image": "https://i.kickstarter.com/assets/054/168/277/84c0ba76b5e1364c259ea29f77e458b8_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1781885298&width=560&sig=i9zvaisdzBTsDej1MOzFwmxPMDBcXX3gqMIIjnf7YS0%3D",
-      "url": "https://www.kickstarter.com/projects/711458714/geo-a-multi-tool-finally-centered-around-you",
-      "deadline": "2026-09-03T14:01:01Z"
     }
   ]
 }
