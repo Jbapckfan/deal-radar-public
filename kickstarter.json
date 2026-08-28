@@ -1,6 +1,238 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-28T11:59:20Z",
+  "generated_at": "2026-08-28T17:59:21Z",
   "kind": "kickstarter",
-  "projects": []
+  "projects": [
+    {
+      "id": "1875596447",
+      "name": "Meet Beni, Your First All-Terrain Camera Robot",
+      "blurb": "4K Imaging | Smart Auto-following | 17.9 mph Max Speed | 10-inch Max Obstacle Jumping | Auto-edited Highlights",
+      "category": "Camera Equipment",
+      "percent_funded": 7667,
+      "backers": 6127,
+      "image": "https://i.kickstarter.com/assets/054/369/924/7ac7cd8573ffc7be3b6db54a2aecda36_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783491210&width=560&sig=cv7UzpXrRnFIpsfNLOM0do9tvpO5oR%2FFNqfxA1Sjoss%3D",
+      "url": "https://www.kickstarter.com/projects/mondorobotics/beni-all-terrain-camera-robot",
+      "deadline": "2026-09-06T14:45:09Z"
+    },
+    {
+      "id": "420182327",
+      "name": "Mighty Morphin Power Rangers Combinable Dragonzord",
+      "blurb": "Mighty Morphin Power Rangers: Re-Ignition from Playmates Toys",
+      "category": "Toys",
+      "percent_funded": 117,
+      "backers": 4638,
+      "image": "https://i.kickstarter.com/assets/054/790/343/61d45342b0778d71101371f73087a2a9_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786998534&width=560&sig=tvM42nW2y%2BrKfbxDPdvzrwg2%2BylbxicXFyqc74vwn34%3D",
+      "url": "https://www.kickstarter.com/projects/playmatestoys/mighty-morphin-power-rangers-combinable-dragonzord",
+      "deadline": "2026-09-19T01:00:00Z"
+    },
+    {
+      "id": "863980289",
+      "name": "EGOR: Breakfast Robot That Cooks Eggs 7 Ways",
+      "blurb": "Cooks eggs 7 ways, on your schedule. No mess, no cleanup. Synchronizes with TOASTR for eggs and toast ready together.",
+      "category": "Product Design",
+      "percent_funded": 1040,
+      "backers": 4186,
+      "image": "https://i.kickstarter.com/assets/054/809/736/daf5ae3be81579eaff74d5f80a9531d8_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787131271&width=560&sig=t%2FPgzZdSzSwrBsxM4MOxhssp%2BEhpsA%2BWAiI9J%2FC15M8%3D",
+      "url": "https://www.kickstarter.com/projects/cheffy/breakfast-automated",
+      "deadline": "2026-08-28T22:00:00Z"
+    },
+    {
+      "id": "1141675002",
+      "name": "SYITREN RM1: Frame Your Music, A Living Art CD Player",
+      "blurb": "Transparent Frame | Album Display | Hi-Fi Audio Output | Bluetooth & AUX | Anti-Shock Playback | Wall & Desk Mount",
+      "category": "Product Design",
+      "percent_funded": 14158,
+      "backers": 3647,
+      "image": "https://i.kickstarter.com/assets/054/652/193/1c4efd403e868febe92a45130fc8ac02_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785851830&width=560&sig=qae96hXtq%2FLK2CZcDpPlfLdgmqTXskObU0QvdUsXTh4%3D",
+      "url": "https://www.kickstarter.com/projects/syitrenaudio/syitren-rm1-frame-your-music-live-art-cd-player",
+      "deadline": "2026-09-02T14:00:16Z"
+    },
+    {
+      "id": "1114436418",
+      "name": "HeyGears G1X: First Desktop Full-Color 3D & UV Printer",
+      "blurb": "Full-Color 3D Printing|10M+ Colors|Full-Color & Transparent in One Print|Anti-Clog Design|Auto-Calibration|12x Faster in UV Printing",
+      "category": "DIY Electronics",
+      "percent_funded": 14984,
+      "backers": 3455,
+      "image": "https://i.kickstarter.com/assets/054/914/742/16f6271d41f8d6e9c156d01c2a81caa1_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787904878&width=560&sig=%2F4EIPJDJchJaPKV148BW%2B6yw3R1mm1HQT8SmUO1koJQ%3D",
+      "url": "https://www.kickstarter.com/projects/heygears/heygears-g1-series-first-desktop-full-color-3d-and-uv-printer",
+      "deadline": "2026-09-11T15:45:08Z"
+    },
+    {
+      "id": "2096747458",
+      "name": "TICKEY: Refresh it new. Clip it on. Carry your moment.",
+      "blurb": "A customizable color e-paper display for your bag, desk, badge, or everyday moments.",
+      "category": "Gadgets",
+      "percent_funded": 23715,
+      "backers": 2936,
+      "image": "https://i.kickstarter.com/assets/054/736/801/501f1fa193081b32230d1e93771e623f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786536460&width=560&sig=opiB%2FGywc1jvvXrwCOIR%2BJ4KK8E23KvLkE5u9VEqlT0%3D",
+      "url": "https://www.kickstarter.com/projects/enilinx/ticket-refresh-it-new-clip-it-on-carry-your-moment",
+      "deadline": "2026-09-25T15:00:02Z"
+    },
+    {
+      "id": "1395372529",
+      "name": "Morpho UV Printer: Industrial-Grade Printing Reimagined",
+      "blurb": "2400 DPI|\u0394E<1.5|9x Faster|60mm Stacking|Stereo Vision|90% Ink Saving|4x Space|Full Color 3D|Refillable Ink|2.5D Scanning|Near-Zero Odor",
+      "category": "DIY Electronics",
+      "percent_funded": 19867,
+      "backers": 2810,
+      "image": "https://i.kickstarter.com/assets/054/846/426/484ebc26b464212590bfba8c027771f7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787410902&width=560&sig=6LtaXL%2BQXT8%2FV0utphsrkFGiRokeFiw%2BjE5I0oD1hAc%3D",
+      "url": "https://www.kickstarter.com/projects/morpho-inc/morpho-desktop-uv-printer",
+      "deadline": "2026-10-14T14:59:30Z"
+    },
+    {
+      "id": "1464248027",
+      "name": "immurok\u4e28Wireless Fingerprint Auth Key for Every Desktop.",
+      "blurb": "Fingerprint for Mac & Linux & Win\u4e28Wireless | On-device Storage\u4e28Offline\u4e28TOTP\u4e28API Keys\u4e28SSH & Git\u4e28 Up to 60 Days Standby \u4e28Source Open",
+      "category": "Gadgets",
+      "percent_funded": 9383,
+      "backers": 2771,
+      "image": "https://i.kickstarter.com/assets/054/744/693/dddaae2b1cf63034e74376730b91585a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786592294&width=560&sig=m5of%2FWD1DZXUUM02%2FppvI3G8wztzIdvHdJiYjW4txgg%3D",
+      "url": "https://www.kickstarter.com/projects/immurok/immurokwireless-fingerprint-auth-key-for-mac-and-linux",
+      "deadline": "2026-09-22T13:59:35Z"
+    },
+    {
+      "id": "1918807039",
+      "name": "Minimal Phone 2: The Modern QWERTY Phone",
+      "blurb": "A focused 5G Android phone with a physical QWERTY keyboard, OLED display, and software designed to help you do more and scroll less.",
+      "category": "Hardware",
+      "percent_funded": 1713,
+      "backers": 2543,
+      "image": "https://i.kickstarter.com/assets/054/705/499/ac3e71276f6de87ca33e6ba41394dfed_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786319799&width=560&sig=rm3iwyGx3CTS4TwR6mGXNMFsB0vTjesf2qVedJpgqwE%3D",
+      "url": "https://www.kickstarter.com/projects/minimalcompany/minimal-phone-2-the-modern-qwerty-phone",
+      "deadline": "2026-09-09T16:00:00Z"
+    },
+    {
+      "id": "797513255",
+      "name": "Keychron V6 Ultra Hybrid 8K: Magnetic & Mechanical Keyboard",
+      "blurb": "Magnetic & Mechanical Switches |Wireless 2.4G & Bluetooth |QMK & AI-enabled Launcher |For Mac & Windows |Customizable |8K Polling Rate",
+      "category": "Product Design",
+      "percent_funded": 784,
+      "backers": 1306,
+      "image": "https://i.kickstarter.com/assets/054/860/273/63508e2207f9c366b6d5f95464a3eec7_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787551940&width=560&sig=j7LxiNrTChBupe5zQTP%2BBlF9d0Y8vhgHFzkOAZDWsQ0%3D",
+      "url": "https://www.kickstarter.com/projects/keytron/keychron-v6-ultra-hybrid-8k-magnetic-and-mechanical-keyboard",
+      "deadline": "2026-09-17T04:00:00Z"
+    },
+    {
+      "id": "661445287",
+      "name": "Smart Belt 2026 - A leap in comfort and elegance unequaled.",
+      "blurb": "Italian leather belt with 32 micro-adjustments, cut-to-size system, and a Kevlar core. A belt all Kickstarter backers know.",
+      "category": "Product Design",
+      "percent_funded": 1351,
+      "backers": 1121,
+      "image": "https://i.kickstarter.com/assets/054/605/362/eb7fde12263e234835a155463d73b01f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1785425847&width=560&sig=Q5H%2BJ4VMAk8oQIYnAb3ePgfEBa04HryIIXrT6fYaHaE%3D",
+      "url": "https://www.kickstarter.com/projects/smartbelt/smart-belt-2026-a-leap-in-comfort-and-elegance-unequaled",
+      "deadline": "2026-10-04T14:14:22Z"
+    },
+    {
+      "id": "397271974",
+      "name": "Smokpub Smokery: The World's First Smoking Dehydrator.",
+      "blurb": "Make smoky jerky, dried fruit, herbs and more with 6 trays, precision dehydration and built-in smoking \u2014 all in one countertop machine.",
+      "category": "Product Design",
+      "percent_funded": 17952,
+      "backers": 956,
+      "image": "https://i.kickstarter.com/assets/054/915/635/e80b95142e0012b22863ef86c0f3b6e4_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787909970&width=560&sig=JdMSzhdSXC3iC2F363I9lX2gjLCx4EFrFQ2JqiSJ8f0%3D",
+      "url": "https://www.kickstarter.com/projects/smokpub/smokery-the-worlds-first-smoking-dehydrator",
+      "deadline": "2026-10-24T12:57:29Z"
+    },
+    {
+      "id": "562073999",
+      "name": "Collectorium: Trade. Display. Protect.",
+      "blurb": "A modular system built for TCG players, pin traders, and every collector who's been making do. Your fandom deserves a home.",
+      "category": "Product Design",
+      "percent_funded": 1805,
+      "backers": 933,
+      "image": "https://i.kickstarter.com/assets/054/436/322/150257bafa767b9a192b585154122ee3_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784045726&width=560&sig=oUDQGfJnAQ%2FSG36IO8LEO0CTUG8DpqV6M5vVTirumIU%3D",
+      "url": "https://www.kickstarter.com/projects/antsylabs/collectorium-trade-display-protect",
+      "deadline": "2026-09-04T01:00:00Z"
+    },
+    {
+      "id": "1213078629",
+      "name": "Ohsnap Wallet 2 - Couldn't Carry Less",
+      "blurb": "An impossibly thin metal wallet designed to be everything you need, and nothing you don't.",
+      "category": "Product Design",
+      "percent_funded": 671,
+      "backers": 735,
+      "image": "https://i.kickstarter.com/assets/054/892/655/e1e5d2f6a72a8705bb7a2d4e4c61872f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787751121&width=560&sig=hKRH0cQrZo5BrNNaw1j7wQf6qzc%2Fde5A%2BJlkO3DnMOE%3D",
+      "url": "https://www.kickstarter.com/projects/ohsnapofficial/ohsnap-wallet-2-couldnt-carry-less",
+      "deadline": "2026-09-26T19:01:06Z"
+    },
+    {
+      "id": "1899865770",
+      "name": "Piston V | Dual-OS Gaming Beast in a Gadget Form Factor",
+      "blurb": "AMD Ryzen AI 9 365 | SteamOS+Windows | up to 64GB DDR5 & 4TB SSD | OCuLink | Mini PC+Console | 4\" Touch Display | USB4 | 73 TOPS",
+      "category": "Gadgets",
+      "percent_funded": 3961,
+      "backers": 518,
+      "image": "https://i.kickstarter.com/assets/054/905/762/c7bdfd971b9365a2c911a0c856bfd426_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787834991&width=560&sig=%2Fs6To%2BPP%2FNqGFKeokNmqjM7tkKh65BSFKY68RtO7%2Bbo%3D",
+      "url": "https://www.kickstarter.com/projects/pistonv/pistonv-dual-os-gaming-beast-in-a-gadget-form-factor",
+      "deadline": "2026-09-18T12:20:22Z"
+    },
+    {
+      "id": "1090270677",
+      "name": "NEO Nomad N4 | The Multi-Role Backpack",
+      "blurb": "One 30\u201332L backpack for work, gym, and travel\u2014with separate laptop and active-gear compartments.",
+      "category": "Product Design",
+      "percent_funded": 2766,
+      "backers": 459,
+      "image": "https://i.kickstarter.com/assets/054/799/213/8bfcaf2b9217ba4abe46fb5bd1aa58ab_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787060110&width=560&sig=fQb4vo6boTKQ9hbwAebqW9OwsEPm7mrDJavJEEiD4PY%3D",
+      "url": "https://www.kickstarter.com/projects/485414743/neo-nomad-n4-the-multi-role-backpack",
+      "deadline": "2026-09-14T14:30:00Z"
+    },
+    {
+      "id": "1583757332",
+      "name": "TOPFAB TF500 5-Axis AI CNC: Your Desktop. Your Fabrication.",
+      "blurb": "True 5-Axis | 0.005 mm High-precision | 60,000 RPM Spindle | 8-Slot ATC | AI CAM | 90KG Industrial Build",
+      "category": "Hardware",
+      "percent_funded": 6138,
+      "backers": 451,
+      "image": "https://i.kickstarter.com/assets/054/917/373/a9f8fd41391018f2457fb283b989a63b_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787922419&width=560&sig=qRT0eWR1vio3fAsoQ971myv%2BQXw1aDoUhNZ3UgSrsp8%3D",
+      "url": "https://www.kickstarter.com/projects/topfab/topfab-tf500-5-axis-ai-cnc-your-desktop-your-fabrication",
+      "deadline": "2026-10-10T13:00:02Z"
+    },
+    {
+      "id": "1740866827",
+      "name": "Switch Rack: A Revolution in Bike Transport",
+      "blurb": "The most kick-ass hitch-mounted bike rack ever conceived!",
+      "category": "Product Design",
+      "percent_funded": 2268,
+      "backers": 416,
+      "image": "https://i.kickstarter.com/assets/054/447/681/37b7f0067799470d961ff070e6cdf019_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1784126617&width=560&sig=hTOB8j2lzIoZNsLjC2g1jW0KkX6abhQo98NLx8eyOc8%3D",
+      "url": "https://www.kickstarter.com/projects/switchrack/switch-rack",
+      "deadline": "2026-08-29T06:59:00Z"
+    },
+    {
+      "id": "1407896055",
+      "name": "PixelMob: Portable-AI-Workstation-for-Creators",
+      "blurb": "NAS Capabilities| One-Tap Shooting & Compositing | 800MB/s Multi-Card Backup | Up to 24TB | AI Culling | Subscription-Free RAW Editing",
+      "category": "Hardware",
+      "percent_funded": 694,
+      "backers": 397,
+      "image": "https://i.kickstarter.com/assets/054/918/997/1680ada43117600aefd10a35334d0c4a_original.jpeg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787933146&width=560&sig=q%2F%2F1pcru135n4xbosxq5jOQSacqyWGL%2Bn9GRg2MFhdY%3D",
+      "url": "https://www.kickstarter.com/projects/pixelmob/pixelmob-portable-ai-workstation-for-creators",
+      "deadline": "2026-10-26T15:46:58Z"
+    },
+    {
+      "id": "1318796710",
+      "name": "RocXZoom, World's First Robotic Extreme Zoom Camera",
+      "blurb": "Get the Impossible Shot with AI",
+      "category": "Camera Equipment",
+      "percent_funded": 2189,
+      "backers": 304,
+      "image": "https://i.kickstarter.com/assets/054/835/807/8c69d3625cf44ce7cb8375159ff5461e_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787310973&width=560&sig=fzS71uEMpS8%2FNgviiP3uN%2FdHJOEWMHNQ7QJujST7PD4%3D",
+      "url": "https://www.kickstarter.com/projects/farseer/rocx-worlds-first-robotic-extreme-zoom-camera",
+      "deadline": "2026-09-26T13:00:11Z"
+    },
+    {
+      "id": "1901797791",
+      "name": "SEREVA KULAX: Full-Hand Recovery, From Fingers to Wrist",
+      "blurb": "Deep air compression, four-finger stretching, palm kneading, and soothing warmth for everyday hand fatigue.",
+      "category": "Product Design",
+      "percent_funded": 993,
+      "backers": 287,
+      "image": "https://i.kickstarter.com/assets/054/903/239/ee2905cab5c71b700e058317858cc1ea_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787820351&width=560&sig=BRo5QHtuVikJRseHBDFWKlR%2B9LpH4pWnNlz7zki9Un0%3D",
+      "url": "https://www.kickstarter.com/projects/sereva/sereva-full-hand-recovery-from-fingers-to-wrist",
+      "deadline": "2026-09-23T12:13:16Z"
+    }
+  ]
 }
