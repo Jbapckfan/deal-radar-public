@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-29T17:59:21Z",
+  "generated_at": "2026-08-29T23:59:21Z",
   "kind": "kickstarter",
   "projects": [
     {
@@ -8,8 +8,8 @@
       "name": "Meet Beni, Your First All-Terrain Camera Robot",
       "blurb": "4K Imaging | Smart Auto-following | 17.9 mph Max Speed | 10-inch Max Obstacle Jumping | Auto-edited Highlights",
       "category": "Camera Equipment",
-      "percent_funded": 7838,
-      "backers": 6257,
+      "percent_funded": 7889,
+      "backers": 6297,
       "image": "https://i.kickstarter.com/assets/054/369/924/7ac7cd8573ffc7be3b6db54a2aecda36_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783491210&width=560&sig=cv7UzpXrRnFIpsfNLOM0do9tvpO5oR%2FFNqfxA1Sjoss%3D",
       "url": "https://www.kickstarter.com/projects/mondorobotics/beni-all-terrain-camera-robot",
       "deadline": "2026-09-06T14:45:09Z"
@@ -19,8 +19,8 @@
       "name": "HeyGears G1X: First Desktop Full-Color 3D & UV Printer",
       "blurb": "Full-Color 3D Printing|10M+ Colors|Full-Color & Transparent in One Print|Anti-Clog Design|Auto-Calibration|12x Faster in UV Printing",
       "category": "DIY Electronics",
-      "percent_funded": 15154,
-      "backers": 3488,
+      "percent_funded": 15188,
+      "backers": 3495,
       "image": "https://i.kickstarter.com/assets/054/914/742/16f6271d41f8d6e9c156d01c2a81caa1_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787904878&width=560&sig=%2F4EIPJDJchJaPKV148BW%2B6yw3R1mm1HQT8SmUO1koJQ%3D",
       "url": "https://www.kickstarter.com/projects/heygears/heygears-g1-series-first-desktop-full-color-3d-and-uv-printer",
       "deadline": "2026-09-11T15:45:08Z"
@@ -30,8 +30,8 @@
       "name": "TICKEY: Refresh it new. Clip it on. Carry your moment.",
       "blurb": "A customizable color e-paper display for your bag, desk, badge, or everyday moments.",
       "category": "Gadgets",
-      "percent_funded": 24626,
-      "backers": 3041,
+      "percent_funded": 24833,
+      "backers": 3065,
       "image": "https://i.kickstarter.com/assets/054/736/801/501f1fa193081b32230d1e93771e623f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786536460&width=560&sig=opiB%2FGywc1jvvXrwCOIR%2BJ4KK8E23KvLkE5u9VEqlT0%3D",
       "url": "https://www.kickstarter.com/projects/enilinx/ticket-refresh-it-new-clip-it-on-carry-your-moment",
       "deadline": "2026-09-25T15:00:02Z"
@@ -41,8 +41,8 @@
       "name": "immurok\u4e28Wireless Fingerprint Auth Key for Every Desktop.",
       "blurb": "Fingerprint for Mac & Linux & Win\u4e28Wireless | On-device Storage\u4e28Offline\u4e28TOTP\u4e28API Keys\u4e28SSH & Git\u4e28 Up to 60 Days Standby \u4e28Source Open",
       "category": "Gadgets",
-      "percent_funded": 9777,
-      "backers": 2880,
+      "percent_funded": 9926,
+      "backers": 2916,
       "image": "https://i.kickstarter.com/assets/054/744/693/dddaae2b1cf63034e74376730b91585a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786592294&width=560&sig=m5of%2FWD1DZXUUM02%2FppvI3G8wztzIdvHdJiYjW4txgg%3D",
       "url": "https://www.kickstarter.com/projects/immurok/immurokwireless-fingerprint-auth-key-for-mac-and-linux",
       "deadline": "2026-09-22T13:59:35Z"
@@ -52,8 +52,8 @@
       "name": "Morpho UV Printer: Industrial-Grade Printing Reimagined",
       "blurb": "2400 DPI|\u0394E<1.5|9x Faster|60mm Stacking|Stereo Vision|90% Ink Saving|4x Space|Full Color 3D|Refillable Ink|2.5D Scanning|Near-Zero Odor",
       "category": "DIY Electronics",
-      "percent_funded": 19881,
-      "backers": 2814,
+      "percent_funded": 19908,
+      "backers": 2818,
       "image": "https://i.kickstarter.com/assets/054/846/426/484ebc26b464212590bfba8c027771f7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787410902&width=560&sig=6LtaXL%2BQXT8%2FV0utphsrkFGiRokeFiw%2BjE5I0oD1hAc%3D",
       "url": "https://www.kickstarter.com/projects/morpho-inc/morpho-desktop-uv-printer",
       "deadline": "2026-10-14T14:59:30Z"
@@ -63,8 +63,8 @@
       "name": "Minimal Phone 2: The Modern QWERTY Phone",
       "blurb": "A focused 5G Android phone with a physical QWERTY keyboard, OLED display, and software designed to help you do more and scroll less.",
       "category": "Hardware",
-      "percent_funded": 1734,
-      "backers": 2576,
+      "percent_funded": 1738,
+      "backers": 2583,
       "image": "https://i.kickstarter.com/assets/054/705/499/ac3e71276f6de87ca33e6ba41394dfed_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786319799&width=560&sig=rm3iwyGx3CTS4TwR6mGXNMFsB0vTjesf2qVedJpgqwE%3D",
       "url": "https://www.kickstarter.com/projects/minimalcompany/minimal-phone-2-the-modern-qwerty-phone",
       "deadline": "2026-09-09T16:00:00Z"
@@ -74,7 +74,7 @@
       "name": "Piston V | Dual-OS Gaming Beast in a Gadget Form Factor",
       "blurb": "AMD Ryzen AI 9 365 | SteamOS+Windows | up to 64GB DDR5 & 4TB SSD | OCuLink | Mini PC+Console | 4\" Touch Display | USB4 | 73 TOPS",
       "category": "Gadgets",
-      "percent_funded": 4176,
+      "percent_funded": 4175,
       "backers": 545,
       "image": "https://i.kickstarter.com/assets/054/905/762/c7bdfd971b9365a2c911a0c856bfd426_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787834991&width=560&sig=%2Fs6To%2BPP%2FNqGFKeokNmqjM7tkKh65BSFKY68RtO7%2Bbo%3D",
       "url": "https://www.kickstarter.com/projects/pistonv/pistonv-dual-os-gaming-beast-in-a-gadget-form-factor",
@@ -85,8 +85,8 @@
       "name": "TOPFAB TF500 5-Axis AI CNC: Your Desktop. Your Fabrication.",
       "blurb": "True 5-Axis | 0.005 mm High-precision | 60,000 RPM Spindle | 8-Slot ATC | AI CAM | 90KG Industrial Build",
       "category": "Hardware",
-      "percent_funded": 6456,
-      "backers": 476,
+      "percent_funded": 6470,
+      "backers": 477,
       "image": "https://i.kickstarter.com/assets/054/917/373/a9f8fd41391018f2457fb283b989a63b_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787922419&width=560&sig=qRT0eWR1vio3fAsoQ971myv%2BQXw1aDoUhNZ3UgSrsp8%3D",
       "url": "https://www.kickstarter.com/projects/topfab/topfab-tf500-5-axis-ai-cnc-your-desktop-your-fabrication",
       "deadline": "2026-10-10T13:00:02Z"
@@ -96,8 +96,8 @@
       "name": "PixelMob: Portable-AI-Workstation-for-Creators",
       "blurb": "NAS Capabilities| One-Tap Shooting & Compositing | 800MB/s Multi-Card Backup | Up to 24TB | AI Culling | Subscription-Free RAW Editing",
       "category": "Hardware",
-      "percent_funded": 812,
-      "backers": 465,
+      "percent_funded": 831,
+      "backers": 474,
       "image": "https://i.kickstarter.com/assets/054/928/814/1c6a57cca93348b59a378854188ec6a6_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788020373&width=560&sig=EF%2Bq1B%2FyW3Hj3yRkUlzRg82EEGEm1Ht46p6xAC499a8%3D",
       "url": "https://www.kickstarter.com/projects/pixelmob/pixelmob-portable-ai-workstation-for-creators",
       "deadline": "2026-10-26T15:46:58Z"
@@ -107,8 +107,8 @@
       "name": "RocXZoom, World's First Robotic Extreme Zoom Camera",
       "blurb": "Get the Impossible Shot with AI",
       "category": "Camera Equipment",
-      "percent_funded": 2353,
-      "backers": 327,
+      "percent_funded": 2373,
+      "backers": 330,
       "image": "https://i.kickstarter.com/assets/054/835/807/8c69d3625cf44ce7cb8375159ff5461e_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787310973&width=560&sig=fzS71uEMpS8%2FNgviiP3uN%2FdHJOEWMHNQ7QJujST7PD4%3D",
       "url": "https://www.kickstarter.com/projects/farseer/rocx-worlds-first-robotic-extreme-zoom-camera",
       "deadline": "2026-09-26T13:00:11Z"
