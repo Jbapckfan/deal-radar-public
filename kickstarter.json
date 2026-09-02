@@ -1,6 +1,106 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-01T17:59:20Z",
+  "generated_at": "2026-09-01T23:59:20Z",
   "kind": "kickstarter",
-  "projects": []
+  "projects": [
+    {
+      "id": "1875596447",
+      "name": "Meet Beni, Your First All-Terrain Camera Robot",
+      "blurb": "4K Imaging | Smart Auto-following | 17.9 mph Max Speed | 10-inch Max Obstacle Jumping | Auto-edited Highlights",
+      "category": "Camera Equipment",
+      "percent_funded": 8227,
+      "backers": 6559,
+      "image": "https://i.kickstarter.com/assets/054/369/924/7ac7cd8573ffc7be3b6db54a2aecda36_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783491210&width=560&sig=cv7UzpXrRnFIpsfNLOM0do9tvpO5oR%2FFNqfxA1Sjoss%3D",
+      "url": "https://www.kickstarter.com/projects/mondorobotics/beni-all-terrain-camera-robot",
+      "deadline": "2026-09-06T14:45:09Z"
+    },
+    {
+      "id": "2096747458",
+      "name": "TICKEY: A Customizable Clip-On Color E-Paper Card",
+      "blurb": "Made for your bag, desk, or badge\u2014bringing photos, art, and ideas beyond the screen and into everyday life.",
+      "category": "Gadgets",
+      "percent_funded": 29545,
+      "backers": 3620,
+      "image": "https://i.kickstarter.com/assets/054/736/801/501f1fa193081b32230d1e93771e623f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786536460&width=560&sig=opiB%2FGywc1jvvXrwCOIR%2BJ4KK8E23KvLkE5u9VEqlT0%3D",
+      "url": "https://www.kickstarter.com/projects/enilinx/ticket-refresh-it-new-clip-it-on-carry-your-moment",
+      "deadline": "2026-09-25T15:00:02Z"
+    },
+    {
+      "id": "1114436418",
+      "name": "HeyGears G1X: First Desktop Full-Color 3D & UV Printer",
+      "blurb": "Full-Color 3D Printing|10M+ Colors|Full-Color & Transparent in One Print|Anti-Clog Design|Auto-Calibration|12x Faster in UV Printing",
+      "category": "DIY Electronics",
+      "percent_funded": 15513,
+      "backers": 3560,
+      "image": "https://i.kickstarter.com/assets/054/963/124/27af545d0d88319c5d06a42e5b93db83_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788278888&width=560&sig=tPTpVvueUhlYsjN7C1kJ6PdRPgSDbDaDtM1%2BTcV3%2Fgg%3D",
+      "url": "https://www.kickstarter.com/projects/heygears/heygears-g1-series-first-desktop-full-color-3d-and-uv-printer",
+      "deadline": "2026-09-11T15:45:08Z"
+    },
+    {
+      "id": "1464248027",
+      "name": "immurok\u4e28Wireless Fingerprint Auth Key for Every Desktop.",
+      "blurb": "Fingerprint for Mac & Linux & Win\u4e28Wireless | On-device Storage\u4e28Offline\u4e28TOTP\u4e28API Keys\u4e28SSH & Git\u4e28 Up to 60 Days Standby \u4e28Source Open",
+      "category": "Gadgets",
+      "percent_funded": 10896,
+      "backers": 3190,
+      "image": "https://i.kickstarter.com/assets/054/744/693/dddaae2b1cf63034e74376730b91585a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786592294&width=560&sig=m5of%2FWD1DZXUUM02%2FppvI3G8wztzIdvHdJiYjW4txgg%3D",
+      "url": "https://www.kickstarter.com/projects/immurok/immurokwireless-fingerprint-auth-key-for-mac-and-linux",
+      "deadline": "2026-09-22T13:59:35Z"
+    },
+    {
+      "id": "1395372529",
+      "name": "Morpho UV Printer: Industrial-Grade Printing Reimagined",
+      "blurb": "2400 DPI|\u0394E<1.5|9x Faster|60mm Stacking|Stereo Vision|90% Ink Saving|4x Space|Full Color 3D|Refillable Ink|2.5D Scanning|Near-Zero Odor",
+      "category": "DIY Electronics",
+      "percent_funded": 20049,
+      "backers": 2839,
+      "image": "https://i.kickstarter.com/assets/054/846/426/484ebc26b464212590bfba8c027771f7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787410902&width=560&sig=6LtaXL%2BQXT8%2FV0utphsrkFGiRokeFiw%2BjE5I0oD1hAc%3D",
+      "url": "https://www.kickstarter.com/projects/morpho-inc/morpho-desktop-uv-printer",
+      "deadline": "2026-10-14T14:59:30Z"
+    },
+    {
+      "id": "206217094",
+      "name": "LightMake L4: 1st 4-Head Color 3D Printer with Linear Motors",
+      "blurb": "4 Independent Heads | Beltless Linear Motors | 4X Batch Production | 1s Toolhead Change | Near-Zero Purge Waste | \u00b11\u00b5m Motion Precision",
+      "category": "3D Printing",
+      "percent_funded": 4045,
+      "backers": 1148,
+      "image": "https://i.kickstarter.com/assets/054/946/194/f176fe74d3d7cc4a264dec81e4bf2e67_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788177802&width=560&sig=2v4gYBt41dwWI61nXhgZnq%2BjxAcaOMJVsV74oQJ6394%3D",
+      "url": "https://www.kickstarter.com/projects/lightmake/lightmake-l4-1st-4-head-color-3d-printer-with-linear-motor",
+      "deadline": "2026-10-15T15:45:09Z"
+    },
+    {
+      "id": "1899865770",
+      "name": "Piston V | Dual-OS Gaming Beast in a Gadget Form Factor",
+      "blurb": "AMD Ryzen AI 9 365 | SteamOS+Windows | up to 64GB DDR5 & 4TB SSD | OCuLink | Mini PC+Console | 4\" Touch Display | USB4 | 73 TOPS",
+      "category": "Gadgets",
+      "percent_funded": 4703,
+      "backers": 610,
+      "image": "https://i.kickstarter.com/assets/054/905/762/c7bdfd971b9365a2c911a0c856bfd426_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787834991&width=560&sig=%2Fs6To%2BPP%2FNqGFKeokNmqjM7tkKh65BSFKY68RtO7%2Bbo%3D",
+      "url": "https://www.kickstarter.com/projects/pistonv/pistonv-dual-os-gaming-beast-in-a-gadget-form-factor",
+      "deadline": "2026-09-18T12:20:22Z"
+    },
+    {
+      "id": "479437041",
+      "name": "Aurami AI Nail Painting Device: Your Nail Salon at Home",
+      "blurb": "Salon-Quality Results\u4e2815-Min Painting\u4e280.1 mm Precision\u4e28Gentle UV Curing\u4e28Healthy for Nails\u4e28Easy Removal\u4e28Change Colors Anytime",
+      "category": "Hardware",
+      "percent_funded": 961,
+      "backers": 328,
+      "image": "https://i.kickstarter.com/assets/054/912/199/c5844c7985e17e0c4766d48af1aee347_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787882941&width=560&sig=jdWx%2BXntM0bEmiHx8qcso13ziKCvNKoFTM2vNIwTXls%3D",
+      "url": "https://www.kickstarter.com/projects/aurami/aurami-ai-nail-painting-device-salon-nails-at-home",
+      "deadline": "2026-10-16T15:00:07Z"
+    },
+    {
+      "id": "648550867",
+      "name": "X1 LITE: World's First Home Use Pen & Torch Laser Machine",
+      "blurb": "Swappable Pen & Torch | Flawless Weld & Cut | 150mm Wide-Cleaning | 14kg Portable | Household Compatible",
+      "category": "Fabrication Tools",
+      "percent_funded": 1312,
+      "backers": 234,
+      "image": "https://i.kickstarter.com/assets/054/961/644/7e1f5b28ae30723df1a8a08540b4da41_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788272279&width=560&sig=wWLwrOy9kuRDx0bhifJIcZD74YG8bOC54P40UO5mXLc%3D",
+      "url": "https://www.kickstarter.com/projects/xlaserlab/x1-lite-worlds-first-pen-and-torch-laser-workstation",
+      "deadline": "2026-10-16T14:03:34Z"
+    }
+  ]
 }
