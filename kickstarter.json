@@ -1,6 +1,271 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-08T23:59:20Z",
+  "generated_at": "2026-09-09T05:59:21Z",
   "kind": "kickstarter",
-  "projects": []
+  "projects": [
+    {
+      "id": "1913592492",
+      "name": "MEZMODROP: Kinetic Desk toy That Performs Impossible Landing",
+      "blurb": "Launch Mezmodrop and witness incredibly precise landing in front of your eyes. Precision engineering meets clever design.",
+      "category": "Product Design",
+      "percent_funded": 5763,
+      "backers": 6019,
+      "image": "https://i.kickstarter.com/assets/054/848/808/76790409f0ea757bab1dd12dde14a16c_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787434187&width=560&sig=cFdmRYnIroAOZuYVDKpZS3aEAprbtyvfBRu80UeWiaY%3D",
+      "url": "https://www.kickstarter.com/projects/mezmoglobe/mezmodrop-desk-toy-that-performs-impossible-landing",
+      "deadline": "2026-09-30T16:05:08Z"
+    },
+    {
+      "id": "420182327",
+      "name": "Mighty Morphin Power Rangers Combinable Dragonzord",
+      "blurb": "Mighty Morphin Power Rangers: Re-Ignition from Playmates Toys",
+      "category": "Toys",
+      "percent_funded": 143,
+      "backers": 5748,
+      "image": "https://i.kickstarter.com/assets/054/790/343/61d45342b0778d71101371f73087a2a9_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786998534&width=560&sig=tvM42nW2y%2BrKfbxDPdvzrwg2%2BylbxicXFyqc74vwn34%3D",
+      "url": "https://www.kickstarter.com/projects/playmatestoys/mighty-morphin-power-rangers-combinable-dragonzord",
+      "deadline": "2026-09-19T01:00:00Z"
+    },
+    {
+      "id": "2096747458",
+      "name": "TICKEY: A Customizable Clip-On Color E-Paper Card",
+      "blurb": "Made for your bag, desk, or badge\u2014bringing photos, art, and ideas beyond the screen and into everyday life.",
+      "category": "Gadgets",
+      "percent_funded": 41075,
+      "backers": 4976,
+      "image": "https://i.kickstarter.com/assets/054/736/801/501f1fa193081b32230d1e93771e623f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786536460&width=560&sig=opiB%2FGywc1jvvXrwCOIR%2BJ4KK8E23KvLkE5u9VEqlT0%3D",
+      "url": "https://www.kickstarter.com/projects/enilinx/ticket-refresh-it-new-clip-it-on-carry-your-moment",
+      "deadline": "2026-09-25T15:00:02Z"
+    },
+    {
+      "id": "1464248027",
+      "name": "immurok\u4e28Wireless Fingerprint Auth Key for Every Desktop.",
+      "blurb": "Fingerprint for Mac & Linux & Win\u4e28Wireless | On-device Storage\u4e28Offline\u4e28TOTP\u4e28API Keys\u4e28SSH & Git\u4e28 Up to 60 Days Standby \u4e28Source Open",
+      "category": "Gadgets",
+      "percent_funded": 13230,
+      "backers": 3856,
+      "image": "https://i.kickstarter.com/assets/054/744/693/dddaae2b1cf63034e74376730b91585a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786592294&width=560&sig=m5of%2FWD1DZXUUM02%2FppvI3G8wztzIdvHdJiYjW4txgg%3D",
+      "url": "https://www.kickstarter.com/projects/immurok/immurokwireless-fingerprint-auth-key-for-mac-and-linux",
+      "deadline": "2026-09-22T13:59:35Z"
+    },
+    {
+      "id": "1114436418",
+      "name": "HeyGears G1X: First Desktop Full-Color 3D & UV Printer",
+      "blurb": "Full-Color 3D Printing|10M+ Colors|Full-Color & Transparent in One Print|Anti-Clog Design|Auto-Calibration|12x Faster in UV Printing",
+      "category": "DIY Electronics",
+      "percent_funded": 16234,
+      "backers": 3693,
+      "image": "https://i.kickstarter.com/assets/055/053/108/de91e65b47eb379fef2372591afccd8f_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788918662&width=560&sig=3ODm%2Bu9J2P%2F%2FJRjJyA1BtbL2IHd831kAee6LeT53xd8%3D",
+      "url": "https://www.kickstarter.com/projects/heygears/heygears-g1-series-first-desktop-full-color-3d-and-uv-printer",
+      "deadline": "2026-09-11T15:45:08Z"
+    },
+    {
+      "id": "1918807039",
+      "name": "Minimal Phone 2: The Modern QWERTY Phone",
+      "blurb": "A focused 5G Android phone with a physical QWERTY keyboard, OLED display, and software designed to help you do more and scroll less.",
+      "category": "Hardware",
+      "percent_funded": 2269,
+      "backers": 3370,
+      "image": "https://i.kickstarter.com/assets/054/705/499/ac3e71276f6de87ca33e6ba41394dfed_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786319799&width=560&sig=rm3iwyGx3CTS4TwR6mGXNMFsB0vTjesf2qVedJpgqwE%3D",
+      "url": "https://www.kickstarter.com/projects/minimalcompany/minimal-phone-2-the-modern-qwerty-phone",
+      "deadline": "2026-09-09T16:00:00Z"
+    },
+    {
+      "id": "1213078629",
+      "name": "Ohsnap Wallet 2 - Couldn't Carry Less",
+      "blurb": "An impossibly thin metal wallet designed to be everything you need, and nothing you don't.",
+      "category": "Product Design",
+      "percent_funded": 2602,
+      "backers": 3064,
+      "image": "https://i.kickstarter.com/assets/054/892/655/e1e5d2f6a72a8705bb7a2d4e4c61872f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787751121&width=560&sig=hKRH0cQrZo5BrNNaw1j7wQf6qzc%2Fde5A%2BJlkO3DnMOE%3D",
+      "url": "https://www.kickstarter.com/projects/ohsnapofficial/ohsnap-wallet-2-couldnt-carry-less",
+      "deadline": "2026-09-26T19:01:06Z"
+    },
+    {
+      "id": "1395372529",
+      "name": "Morpho UV Printer: Industrial-Grade Printing Reimagined",
+      "blurb": "2400 DPI|\u0394E<1.5|9x Faster|60mm Stacking|Stereo Vision|90% Ink Saving|4x Space|Full Color 3D|Refillable Ink|2.5D Scanning|Near-Zero Odor",
+      "category": "DIY Electronics",
+      "percent_funded": 20303,
+      "backers": 2871,
+      "image": "https://i.kickstarter.com/assets/054/846/426/484ebc26b464212590bfba8c027771f7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787410902&width=560&sig=6LtaXL%2BQXT8%2FV0utphsrkFGiRokeFiw%2BjE5I0oD1hAc%3D",
+      "url": "https://www.kickstarter.com/projects/morpho-inc/morpho-desktop-uv-printer",
+      "deadline": "2026-10-14T14:59:30Z"
+    },
+    {
+      "id": "369834143",
+      "name": "MoonBox: Clean Your Litter Box in 5 Seconds \u2014 No Electricity",
+      "blurb": "Funded in under 10 hours. No scooping or electronics. Just spin and clean in 5 seconds. Fully washable. Stainless upgrade available.",
+      "category": "Product Design",
+      "percent_funded": 271,
+      "backers": 2198,
+      "image": "https://i.kickstarter.com/assets/054/791/005/bba0b722451d906d2f7d986d3e04504f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787002354&width=560&sig=Ty8A%2Bxh%2BsAeCStOGn5Tg6BJTUuQL37%2FnYmn7h%2BUlncs%3D",
+      "url": "https://www.kickstarter.com/projects/moonbox/moonbox-clean-your-litter-box-in-5-seconds-no-electricity",
+      "deadline": "2026-09-11T12:48:27Z"
+    },
+    {
+      "id": "397271974",
+      "name": "Smokpub Smokery: The World's First Smoking Dehydrator.",
+      "blurb": "Make smoky jerky, dried fruit, herbs and more with 6 trays, precision dehydration and built-in smoking \u2014 all in one countertop machine.",
+      "category": "Product Design",
+      "percent_funded": 41057,
+      "backers": 2114,
+      "image": "https://i.kickstarter.com/assets/055/039/402/af9916d23903876f7c008d0ed014a288_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788848100&width=560&sig=NTtWiFDc6lt9luWrgTxfIgnyt2PSn%2BlTUlA1prLMSBM%3D",
+      "url": "https://www.kickstarter.com/projects/smokpub/smokery-the-worlds-first-smoking-dehydrator",
+      "deadline": "2026-10-24T12:57:29Z"
+    },
+    {
+      "id": "1256938972",
+      "name": "AirCannon GPX: UNLEASH 118MPH POWER. THE MONSTER BLOWER",
+      "blurb": "118MPH(190km/h) | 0.77lb Handy Size | 16.8V BL Motor | Jet Engine Blades | Heat-Resistant Design | 3 Nozzles with vacuum | Shell Case",
+      "category": "Hardware",
+      "percent_funded": 5286,
+      "backers": 1538,
+      "image": "https://i.kickstarter.com/assets/055/028/205/a7d8a80c5d44d3891cfc5695358d01d6_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788770799&width=560&sig=A2GOvi37c7buC%2BjwoMRCXWXtbS%2FjcFZ492AWId1d4Pk%3D",
+      "url": "https://www.kickstarter.com/projects/magpietech/aircannon-gpx-unleash-118mph-power-the-monster-blower",
+      "deadline": "2026-11-06T16:03:14Z"
+    },
+    {
+      "id": "797513255",
+      "name": "Keychron V6 Ultra Hybrid 8K: Magnetic & Mechanical Keyboard",
+      "blurb": "Magnetic & Mechanical Switches |Wireless 2.4G & Bluetooth |QMK & AI-enabled Launcher |For Mac & Windows |Customizable |8K Polling Rate",
+      "category": "Product Design",
+      "percent_funded": 877,
+      "backers": 1446,
+      "image": "https://i.kickstarter.com/assets/054/860/273/63508e2207f9c366b6d5f95464a3eec7_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787551940&width=560&sig=j7LxiNrTChBupe5zQTP%2BBlF9d0Y8vhgHFzkOAZDWsQ0%3D",
+      "url": "https://www.kickstarter.com/projects/keytron/keychron-v6-ultra-hybrid-8k-magnetic-and-mechanical-keyboard",
+      "deadline": "2026-09-17T04:00:00Z"
+    },
+    {
+      "id": "505524446",
+      "name": "KiWear Ring: One Ring to Rule All Your Devices",
+      "blurb": "Touchless cross-device control, 24/7 health tracking, and gesture gaming\u2014all in one lightweight, waterproof smart ring.",
+      "category": "Wearables",
+      "percent_funded": 6280,
+      "backers": 1289,
+      "image": "https://i.kickstarter.com/assets/055/044/455/d92f972dafe26a59616c4ab3cbd1647c_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788876403&width=560&sig=qneNhYgClDiRio7dBBRHs1Un6vofFAYGXzM1CX%2BeUMw%3D",
+      "url": "https://www.kickstarter.com/projects/kiwear/kiwear-ring-control-every-device-with-a-gesture",
+      "deadline": "2026-10-07T14:59:51Z"
+    },
+    {
+      "id": "1090270677",
+      "name": "NEO Nomad N4 | The Multi-Role Backpack",
+      "blurb": "One 30\u201332L backpack for work, gym, and travel\u2014with separate laptop and active-gear compartments.",
+      "category": "Product Design",
+      "percent_funded": 5562,
+      "backers": 919,
+      "image": "https://i.kickstarter.com/assets/054/799/213/8bfcaf2b9217ba4abe46fb5bd1aa58ab_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787060110&width=560&sig=fQb4vo6boTKQ9hbwAebqW9OwsEPm7mrDJavJEEiD4PY%3D",
+      "url": "https://www.kickstarter.com/projects/485414743/neo-nomad-n4-the-multi-role-backpack",
+      "deadline": "2026-09-14T14:30:00Z"
+    },
+    {
+      "id": "878893919",
+      "name": "4URPC: 15.6\" Wireless Touchscreen Portable Monitor",
+      "blurb": "15.6\" FHD IPS Display\uff5cLow-Latency Wireless Cast\uff5cReverse Touch\uff5c4000mAh Battery\uff5cFull-Function USB-C\uff5cPlug & Play\uff5cWide Compatibility",
+      "category": "Gadgets",
+      "percent_funded": 4614,
+      "backers": 711,
+      "image": "https://i.kickstarter.com/assets/054/997/384/affb40dee059be1c1567dc08b3600226_original.jpeg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788490831&width=560&sig=lWfFMEmY0HvpAl8loL%2Bv66nNBZpMfIDEurCGOaFmsmQ%3D",
+      "url": "https://www.kickstarter.com/projects/1469979441/4urpc-x6-156-wireless-touchscreen-portable-monitor",
+      "deadline": "2026-10-01T11:45:35Z"
+    },
+    {
+      "id": "1899865770",
+      "name": "Piston V | Dual-OS Gaming Beast in a Gadget Form Factor",
+      "blurb": "AMD Ryzen AI 9 365 /370 | SteamOS+Windows | up to 64GB DDR5 & 4TB SSD | OCuLink | Mini PC+Console | 4\" Touch Display | 2xUSB4 | 73 TOPS",
+      "category": "Gadgets",
+      "percent_funded": 5317,
+      "backers": 692,
+      "image": "https://i.kickstarter.com/assets/055/012/111/56bbd1b2165d8aaf9ab4fb8a0e16036b_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788614015&width=560&sig=b3u8PZAwr6KWNDQLtU1mkR9Mlh77MZAHBJuVbPthljU%3D",
+      "url": "https://www.kickstarter.com/projects/pistonv/pistonv-dual-os-gaming-beast-in-a-gadget-form-factor",
+      "deadline": "2026-09-18T12:20:22Z"
+    },
+    {
+      "id": "1948362746",
+      "name": "PORTALO: The Portable Pressurized Water Sprayer",
+      "blurb": "A compact water system with an integrated hose and hands-free use for personal hygiene, sandy feet, muddy gear, and quick cleanups.",
+      "category": "Product Design",
+      "percent_funded": 636,
+      "backers": 592,
+      "image": "https://i.kickstarter.com/assets/054/378/025/405194edfa295cb65343709331fb3fc3_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1783542100&width=560&sig=S%2BZ11%2BxhZplrzyYDwRGKLxzzuwOvsXbefMA719musSQ%3D",
+      "url": "https://www.kickstarter.com/projects/portalo/portable-pressurized-water-sprayer",
+      "deadline": "2026-10-01T14:00:29Z"
+    },
+    {
+      "id": "317563554",
+      "name": "Avensi Wave Porcelain: The Most Impossible Coffee Cups",
+      "blurb": "Internal Aeration Wave\u2122 Ridges Amplify Flavor & Aroma | Craftsmanship Meets Sensory Science | A Cup Design Unlike Anything Before",
+      "category": "Product Design",
+      "percent_funded": 491,
+      "backers": 425,
+      "image": "https://i.kickstarter.com/assets/055/019/977/5bd8182dc1535421b144dcb4e2953802_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788707249&width=560&sig=%2B4fiOCStPmm2TATxYUk5u27k78Qw1%2FJpE4wTW3lPNME%3D",
+      "url": "https://www.kickstarter.com/projects/icosabrewhouse/avensi-wave-porcelain-flavor-and-aroma-enhancing-coffee-cups",
+      "deadline": "2026-10-23T03:59:00Z"
+    },
+    {
+      "id": "1841814277",
+      "name": "BirdieSense: Your Golf's First AI Companion!",
+      "blurb": "Capture Every Swing\u4e28Real-Time 3D Mapping\u4e28Proactive AI Coach\u4e28Dual 4K Vision & Edge AI\u4e286-Hour Runtime\u4e28Portable Design",
+      "category": "Robots",
+      "percent_funded": 2070,
+      "backers": 414,
+      "image": "https://i.kickstarter.com/assets/054/834/757/a328f3b1d63fbc6b6c0e18381a46c388_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787304106&width=560&sig=s24VrXihNabps3jUA%2B9GTc%2F%2Bu92yewbvteOphfGdE2E%3D",
+      "url": "https://www.kickstarter.com/projects/1054191270/birdiesense-your-golfs-first-ai-companion",
+      "deadline": "2026-11-07T16:00:04Z"
+    },
+    {
+      "id": "297968723",
+      "name": "Dobrag | The Everyday Bag That Becomes Your Blanket",
+      "blurb": "Made for wherever the day goes - groceries, work, picnics, beach days & playdates. Carry it all, open flat, pack up in one pull.",
+      "category": "Product Design",
+      "percent_funded": 1433,
+      "backers": 411,
+      "image": "https://i.kickstarter.com/assets/055/016/612/6d6acebd982b993d6a50b65361adf2f3_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788663614&width=560&sig=DUTw1ureLLOnMR9wvgc59WUBAwbsZswuaHitc3YnSoI%3D",
+      "url": "https://www.kickstarter.com/projects/vanik/dobrag",
+      "deadline": "2026-10-14T01:04:00Z"
+    },
+    {
+      "id": "1053134019",
+      "name": "PexarBolt: The Thunderbolt 5 Dock that Shows Your Workflow",
+      "blurb": "5-inch AI Dashboard | Up to 120Gb/s TB5 | 22-in-1 Pro Ports | 10GbE | CFexpress B + NVMe SSD Slot | 140W PD | AI Workflow Status",
+      "category": "Hardware",
+      "percent_funded": 1950,
+      "backers": 362,
+      "image": "https://i.kickstarter.com/assets/055/045/925/84d2c1a0100cda95f87490cc10dac63e_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788882979&width=560&sig=Rt8wn0Ac%2FC9Ww9OoWhSJ2mEzjGhA92YDIbSPlcmybKM%3D",
+      "url": "https://www.kickstarter.com/projects/1293510277/pexarbolt-the-thunderbolt-5-dock-that-shows-your-workflow",
+      "deadline": "2026-11-07T15:00:15Z"
+    },
+    {
+      "id": "1693859571",
+      "name": "Ears 360 Silence | The Earplug That Disappears in Your Ear",
+      "blurb": "Designed to reduce everyday noise for better focus and sleep, with a retractable spiral for stability and all-day comfort.",
+      "category": "Product Design",
+      "percent_funded": 291,
+      "backers": 355,
+      "image": "https://i.kickstarter.com/assets/054/895/125/de50d0fde48ca6b816ed5a8ea825041a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787763163&width=560&sig=W10M5aIA%2F16zvohgFtVR1rdSWl%2F4ndmQs%2BHzkF6FzNM%3D",
+      "url": "https://www.kickstarter.com/projects/ears360/ears-360-silence-the-earplug-that-disappears-in-your-ear",
+      "deadline": "2026-10-01T14:22:09Z"
+    },
+    {
+      "id": "648550867",
+      "name": "X1 LITE: World's First Home Use Pen & Torch Laser Machine",
+      "blurb": "Swappable Pen & Torch | Flawless Weld & Cut | 150mm Wide-Cleaning | 14kg Portable | Household Compatible",
+      "category": "Fabrication Tools",
+      "percent_funded": 1921,
+      "backers": 339,
+      "image": "https://i.kickstarter.com/assets/055/029/357/7f930f1d6923c4d41a8c605a764f09c8_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788778033&width=560&sig=L2naCmaGPDup0XKBf7JNEw47hFPONHCV847yGiGH9Vs%3D",
+      "url": "https://www.kickstarter.com/projects/xlaserlab/x1-lite-worlds-first-pen-and-torch-laser-workstation",
+      "deadline": "2026-10-16T14:03:34Z"
+    },
+    {
+      "id": "2064052952",
+      "name": "Alpargali Cargo: No Bag Days Start Here.",
+      "blurb": "19-Pocket System | All-Weather Shield | Built-in Bag | Classic Silhouette | 15K Waterproof | 8K Breathable | Engineered for Real Life",
+      "category": "Product Design",
+      "percent_funded": 1433,
+      "backers": 331,
+      "image": "https://i.kickstarter.com/assets/055/054/748/9e3340d32c947fead72ea22146ebea1a_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788932381&width=560&sig=rvFFwgdTU0JbS5Qj7dw0xWxZm9OQGamQ1vfMYMwZRKg%3D",
+      "url": "https://www.kickstarter.com/projects/alpargali/algargali-cargo-trench",
+      "deadline": "2026-10-03T14:00:04Z"
+    }
+  ]
 }
