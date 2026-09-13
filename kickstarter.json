@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T17:59:20Z",
+  "generated_at": "2026-09-12T23:59:20Z",
   "kind": "kickstarter",
   "projects": [
     {
@@ -8,8 +8,8 @@
       "name": "TICKEY: A Customizable Clip-On Color E-Paper Card",
       "blurb": "Made for your bag, desk, or badge\u2014bringing photos, art, and ideas beyond the screen and into everyday life.",
       "category": "Gadgets",
-      "percent_funded": 45516,
-      "backers": 5506,
+      "percent_funded": 45875,
+      "backers": 5543,
       "image": "https://i.kickstarter.com/assets/054/736/801/501f1fa193081b32230d1e93771e623f_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786536460&width=560&sig=opiB%2FGywc1jvvXrwCOIR%2BJ4KK8E23KvLkE5u9VEqlT0%3D",
       "url": "https://www.kickstarter.com/projects/enilinx/ticket-refresh-it-new-clip-it-on-carry-your-moment",
       "deadline": "2026-09-25T15:00:02Z"
@@ -19,8 +19,8 @@
       "name": "immurok\u4e28Wireless Fingerprint Auth Key for Every Desktop.",
       "blurb": "Fingerprint for Mac & Linux & Win\u4e28Wireless | On-device Storage\u4e28Offline\u4e28TOTP\u4e28API Keys\u4e28SSH & Git\u4e28 Up to 60 Days Standby \u4e28Source Open",
       "category": "Gadgets",
-      "percent_funded": 13801,
-      "backers": 4019,
+      "percent_funded": 13874,
+      "backers": 4038,
       "image": "https://i.kickstarter.com/assets/054/744/693/dddaae2b1cf63034e74376730b91585a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1786592294&width=560&sig=m5of%2FWD1DZXUUM02%2FppvI3G8wztzIdvHdJiYjW4txgg%3D",
       "url": "https://www.kickstarter.com/projects/immurok/immurokwireless-fingerprint-auth-key-for-mac-and-linux",
       "deadline": "2026-09-22T13:59:35Z"
@@ -30,8 +30,8 @@
       "name": "Morpho UV Printer: Industrial-Grade Printing Reimagined",
       "blurb": "2400 DPI|\u0394E<1.5|9x Faster|60mm Stacking|Stereo Vision|90% Ink Saving|4x Space|Full Color 3D|Refillable Ink|2.5D Scanning|Near-Zero Odor",
       "category": "DIY Electronics",
-      "percent_funded": 20284,
-      "backers": 2869,
+      "percent_funded": 20279,
+      "backers": 2868,
       "image": "https://i.kickstarter.com/assets/054/846/426/484ebc26b464212590bfba8c027771f7_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787410902&width=560&sig=6LtaXL%2BQXT8%2FV0utphsrkFGiRokeFiw%2BjE5I0oD1hAc%3D",
       "url": "https://www.kickstarter.com/projects/morpho-inc/morpho-desktop-uv-printer",
       "deadline": "2026-10-14T14:59:30Z"
@@ -41,8 +41,8 @@
       "name": "AirCannon GPX: UNLEASH 118MPH POWER. THE MONSTER BLOWER",
       "blurb": "118MPH(190km/h) | 0.77lb Handy Size | 16.8V BL Motor | Jet Engine Blades | Heat-Resistant Design | 3 Nozzles with vacuum | Shell Case",
       "category": "Hardware",
-      "percent_funded": 6479,
-      "backers": 1872,
+      "percent_funded": 6519,
+      "backers": 1883,
       "image": "https://i.kickstarter.com/assets/055/028/205/a7d8a80c5d44d3891cfc5695358d01d6_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788770799&width=560&sig=A2GOvi37c7buC%2BjwoMRCXWXtbS%2FjcFZ492AWId1d4Pk%3D",
       "url": "https://www.kickstarter.com/projects/magpietech/aircannon-gpx-unleash-118mph-power-the-monster-blower",
       "deadline": "2026-11-06T16:03:14Z"
@@ -52,8 +52,8 @@
       "name": "KiWear Ring: One Ring to Rule All Your Devices",
       "blurb": "Touchless cross-device control, 24/7 health tracking, and gesture gaming\u2014all in one lightweight, waterproof smart ring.",
       "category": "Wearables",
-      "percent_funded": 7075,
-      "backers": 1433,
+      "percent_funded": 7114,
+      "backers": 1440,
       "image": "https://i.kickstarter.com/assets/055/044/455/d92f972dafe26a59616c4ab3cbd1647c_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788876403&width=560&sig=qneNhYgClDiRio7dBBRHs1Un6vofFAYGXzM1CX%2BeUMw%3D",
       "url": "https://www.kickstarter.com/projects/kiwear/kiwear-ring-control-every-device-with-a-gesture",
       "deadline": "2026-10-07T14:59:51Z"
@@ -63,8 +63,8 @@
       "name": "MAKERphone 2.0 - an educational DIY mobile phone",
       "blurb": "Real 4G Calls & SMS | Build It Yourself | Code in MicroPython & Arduino C++ | AI-Assisted Coding | Add-On Modules | Headphone Jack",
       "category": "DIY Electronics",
-      "percent_funded": 723,
-      "backers": 1269,
+      "percent_funded": 758,
+      "backers": 1330,
       "image": "https://i.kickstarter.com/assets/055/031/088/66f3d1f2e1fb382f7a785a92cedb6041_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788790419&width=560&sig=0gvL1x2NBBJof84%2FxsrA6bgNQwye2Ip%2B094UZPDLByw%3D",
       "url": "https://www.kickstarter.com/projects/albertgajsak/makerphone-20-an-educational-diy-mobile-phone",
       "deadline": "2026-10-10T14:59:51Z"
@@ -74,8 +74,8 @@
       "name": "4URPC: 15.6\" Wireless Touchscreen Portable Monitor",
       "blurb": "15.6\" FHD IPS Display\uff5cLow-Latency Wireless Cast\uff5cReverse Touch\uff5c4000mAh Battery\uff5cFull-Function USB-C\uff5cPlug & Play\uff5cWide Compatibility",
       "category": "Gadgets",
-      "percent_funded": 5640,
-      "backers": 857,
+      "percent_funded": 5734,
+      "backers": 871,
       "image": "https://i.kickstarter.com/assets/054/997/384/affb40dee059be1c1567dc08b3600226_original.jpeg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788490831&width=560&sig=lWfFMEmY0HvpAl8loL%2Bv66nNBZpMfIDEurCGOaFmsmQ%3D",
       "url": "https://www.kickstarter.com/projects/1469979441/4urpc-x6-156-wireless-touchscreen-portable-monitor",
       "deadline": "2026-10-01T11:45:35Z"
@@ -85,19 +85,30 @@
       "name": "PexarBolt: The Thunderbolt 5 Dock that Shows Your Workflow",
       "blurb": "5-inch AI Dashboard | Up to 120Gb/s TB5 | 22-in-1 Pro Ports | 10GbE | CFexpress B + NVMe SSD Slot | 140W PD | AI Workflow Status",
       "category": "Hardware",
-      "percent_funded": 2980,
-      "backers": 551,
+      "percent_funded": 3032,
+      "backers": 557,
       "image": "https://i.kickstarter.com/assets/055/058/154/6758cf118a9163af6f6c9d35b7259a81_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788953445&width=560&sig=8H4meRHpvdIWLDjcP%2FTwpFt%2BQmHYwqUb4vTGisauYNk%3D",
       "url": "https://www.kickstarter.com/projects/1293510277/pexarbolt-the-thunderbolt-5-dock-that-shows-your-workflow",
       "deadline": "2026-11-07T15:00:15Z"
+    },
+    {
+      "id": "800574368",
+      "name": "Object Stream Community: The Home Object Shows Deserve",
+      "blurb": "A free, community-driven platform to discover, organize, and follow Object Shows, all played through YouTube's official player.",
+      "category": "Web",
+      "percent_funded": 88,
+      "backers": 437,
+      "image": "https://i.kickstarter.com/assets/054/880/001/1ac0616d3d9d83f83fc7d2eeb51aa17a_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1787670993&width=560&sig=m65UTp6prHmGsRNwo9PCE2B8D%2F4AFORNnPzLnyHp%2F%2BM%3D",
+      "url": "https://www.kickstarter.com/projects/idank/object-stream-community-the-home-object-shows-deserve",
+      "deadline": "2026-09-30T22:04:22Z"
     },
     {
       "id": "1252252473",
       "name": "Xhorse3D Xmachine WM-100 Desktop Simultaneous 5-Axis CNC",
       "blurb": "Simultaneous 5-axis|1500W, 20,000RPM Spindle|\u00b10.01mm High-Precise|Auto Tool Changer| AI CAM|Laser 3D Scanning Module for Positioning",
       "category": "Fabrication Tools",
-      "percent_funded": 416,
-      "backers": 375,
+      "percent_funded": 415,
+      "backers": 374,
       "image": "https://i.kickstarter.com/assets/055/085/954/21b2e7a4a0e683fedead982ded6eb890_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1789135054&width=560&sig=v8dxwFa49PN5S5MQqWLjTvkyUuUKov3y4RgbKT9njYY%3D",
       "url": "https://www.kickstarter.com/projects/xhorse3d/xhorse3d-xmachine-wm-100-desktop-simultaneous-5-axis-cnc",
       "deadline": "2026-10-25T13:58:11Z"
@@ -107,22 +118,11 @@
       "name": "X1 LITE: World's First Home Use Pen & Torch Laser Machine",
       "blurb": "Swappable Pen & Torch | Flawless Weld & Cut | 150mm Wide-Cleaning | 14kg Portable | Household Compatible",
       "category": "Fabrication Tools",
-      "percent_funded": 2038,
-      "backers": 358,
+      "percent_funded": 2044,
+      "backers": 359,
       "image": "https://i.kickstarter.com/assets/055/067/304/af46198dc3a0979a373b5dc9c7f3a45c_original.png?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1789012845&width=560&sig=fCEx8IW4%2BVJZ7Muk9qzOUwJhe27cf2BYACPRN1XzEkw%3D",
       "url": "https://www.kickstarter.com/projects/xlaserlab/x1-lite-worlds-first-pen-and-torch-laser-workstation",
       "deadline": "2026-10-16T14:03:34Z"
-    },
-    {
-      "id": "1756423206",
-      "name": "LaserCyber L1 Series & C1 CNC: Intelligent Metal Workshop",
-      "blurb": "1200W Strong Weld\uff5cIndustrial CNC Cutting | Built-in Wire Feeder\uff5c100mm Laser Cleaning\uff5cReflective Metals Ready\uff5c4mm Metal\uff5cAI Vision",
-      "category": "Fabrication Tools",
-      "percent_funded": 7057,
-      "backers": 227,
-      "image": "https://i.kickstarter.com/assets/054/945/946/58c066ac932dd7537f59f7cb4d102ae1_original.jpg?anim=false&fit=cover&gravity=auto&height=315&origin=ugc&q=92&v=1788176211&width=560&sig=BsDMNjfbJlH%2FGwQ%2FzklkUTXaxA%2BeQVfSEcM3gcS%2BcS0%3D",
-      "url": "https://www.kickstarter.com/projects/lasercyber/lasercyber-l1-pro-1200w-laser-welder-and-cnc-desktop-workshop",
-      "deadline": "2026-10-09T15:45:07Z"
     }
   ]
 }
