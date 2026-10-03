@@ -200,7 +200,7 @@ function formatAge(min) {
 /* ---------- sources panel ---------- */
 const REASON_LABELS = {
   no_compare_price: "no sale prices in feed — tracking baseline",
-  zero_discounts: "on sale, but under 30% off",
+  zero_discounts: "no discounts meet this source’s threshold",
   zero_matching_sizes: "nothing in your sizes",
   empty_feed: "feed returned nothing",
 };
