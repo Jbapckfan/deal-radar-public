@@ -5,7 +5,8 @@
 
 const CFG = window.DEAL_RADAR_CONFIG || {};
 const SIZE_LABELS = { medium: "Medium", "34x32": "34×32", short_34: "34 Shorts", shoe_12: "Size 12", one_size: "One size" };
-const VERTICAL_LABELS = { apparel: "Clothes", gear: "Gear", electronics: "Tech" };
+const VERTICAL_LABELS = { apparel: "Clothes", gear: "Gear", electronics: "Tech", localllm: "Local LLM" };
+const LOCALLLM_LABELS = { apple: "Apple", nvidia: "NVIDIA", amd: "AMD", pc: "PC" };
 const GARMENT_LABELS = {
   tee: "Tees",
   polo: "Polos",
@@ -27,9 +28,12 @@ const GARMENT_LABELS = {
 const GEAR_LABELS = {
   knife: "Knives",
   light: "Lights",
+  flashlight: "Flashlights",
   cooler: "Coolers",
   drinkware: "Drinkware",
   hat: "Hats",
+  case: "Cases",
+  camp: "Camp",
   bag: "Bags",
   accessory: "Accessories",
   tech: "Tech",
@@ -71,17 +75,33 @@ init();
 
 async function init() {
   setupNotify();
+  const feedURL = CFG.DEALS_URL || "./deals.json";
+  const cacheKey = "dealRadar.lastGoodFeed:" + new URL(feedURL, location.href).href;
+  let saved = false;
   try {
-    const res = await fetch(CFG.DEALS_URL || "./deals.json", { cache: "no-store" });
+    const res = await fetch(feedURL, { cache: "no-store", signal: AbortSignal.timeout(10000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    state.data = await res.json();
+    const data = await res.json();
+    if (!validFeed(data)) throw new Error("Invalid feed");
+    state.data = data;
+    try { localStorage.setItem(cacheKey, JSON.stringify(data)); } catch (_) {}
     captureNewSinceLastOpen();
   } catch (err) {
-    $("#freshness").textContent = "could not load deals";
-    $("#freshness").classList.add("stale");
-    return;
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKey));
+      if (validFeed(cached)) { state.data = cached; saved = true; }
+    } catch (_) {}
+    if (!state.data) {
+      $("#freshness").textContent = `could not load deals: ${err.message}`;
+      $("#freshness").classList.add("stale");
+      return;
+    }
   }
   renderFreshness();
+  if (saved) {
+    $("#freshness").textContent = "saved deals — " + $("#freshness").textContent;
+    $("#freshness").classList.add("stale");
+  }
   renderSources();
   buildChips();
   setupTrialBrands();
@@ -90,6 +110,11 @@ async function init() {
   $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
   $("#controls").hidden = false;
   renderGrid();
+}
+
+function validFeed(data) {
+  return data && Array.isArray(data.deals) && Array.isArray(data.sources)
+    && Number.isFinite(Date.parse(data.generated_at)) && data.stale_after_minutes > 0;
 }
 
 /* ---------- freshness / staleness ---------- */
@@ -156,7 +181,7 @@ function buildChips() {
   const verticalCounts = countBy(defaultDeals, verticalOf);
   const garmentBase = defaultDeals.filter((d) => verticalOf(d) === "apparel");
   const gearBase = defaultDeals.filter((d) =>
-    state.vertical === "gear" || state.vertical === "electronics"
+    ["gear", "electronics", "localllm"].includes(state.vertical)
       ? verticalOf(d) === state.vertical
       : verticalOf(d) !== "apparel");
   const garmentCounts = countBy(garmentBase, garmentOf);
@@ -177,19 +202,26 @@ function buildChips() {
     [["all", "All", defaultDeals.length],
       ...Object.entries(verticalCounts)
         .sort(([a], [b]) => verticalOrder(a) - verticalOrder(b))
-        .map(([k, n]) => [k, VERTICAL_LABELS[k] || titleCase(k), n])],
+        .map(([k, n]) => [k, VERTICAL_LABELS[k] || titleCase(k), n]),
+      ["macbook128", "MacBook Pro 16″ · 128 GB", (state.data.hardware_watches || []).length]],
     state.vertical,
     (value) => {
       state.vertical = value;
       state.garment = "all";
       state.gearType = "all";
       if (state.vertical !== "apparel") state.size = "all";
+      if (value === "localllm") setSort("price-asc");
+      else if (state.sort === "price-asc") setSort("score");
       buildChips();
       renderGrid();
     });
 
   const showGarments = state.vertical === "all" || state.vertical === "apparel";
-  const showGearTypes = state.vertical === "all" || state.vertical !== "apparel";
+  const watch = state.vertical === "macbook128";
+  const showGearTypes = !watch && (state.vertical === "all" || state.vertical !== "apparel");
+  $("#brand-chips").closest(".control-group").hidden = watch;
+  $("#new-filter").closest(".control-group").hidden = watch;
+  $("#sort").closest(".control-group").hidden = watch;
   $("#size-group").hidden = state.vertical !== "all" && state.vertical !== "apparel";
   $("#garment-group").hidden = !showGarments || Object.keys(garmentCounts).length === 0;
   $("#gear-group").hidden = !showGearTypes || Object.keys(gearCounts).length === 0;
@@ -283,7 +315,37 @@ function buildSizeChips(container, entries) {
 }
 
 /* ---------- grid ---------- */
+function renderHardwareWatch() {
+  const grid = $("#grid");
+  grid.innerHTML = "";
+  $("#empty").hidden = true;
+  const items = [...(state.data.hardware_watches || [])].sort((a, b) => a.price - b.price);
+  $("#count").textContent = `${items.length} MacBook listings`;
+  const section = document.createElement("section");
+  section.className = "deal-section";
+  section.innerHTML = `<div class="section-head"><h2>MacBook Pro 16″ · 128 GB</h2><span>${items.length}</span></div>
+    <p class="watch-note">Available refurbished listings, including prices without a confirmed discount.</p>`;
+  if (!items.length) section.innerHTML += '<p class="watch-note">No matching listings in the latest scan.</p>';
+  const cards = document.createElement("div");
+  cards.className = "section-grid";
+  for (const w of items) {
+    const article = document.createElement("article");
+    article.className = "card is-gear";
+    const specs = ["16-inch", "128 GB RAM", w.storage_gb ? `${w.storage_gb >= 1024 ? w.storage_gb / 1024 + " TB" : w.storage_gb + " GB"} SSD` : null, w.display_finish].filter(Boolean).join(" · ");
+    article.innerHTML = `<a class="card-main" href="${escapeAttr(safeHttp(w.url) || "")}" target="_blank" rel="noopener">
+      <div class="card-media">${imageTag(w)}<span class="badge ram">128 GB</span></div>
+      <div class="card-body"><span class="card-brand">${escapeHtml(w.source)}</span>
+      <span class="card-title">${escapeHtml(w.title)}</span><span class="card-kind">${escapeHtml(specs)}</span>
+      <div class="price-row"><span class="price-now">$${fmt(w.price)}</span></div>
+      <span class="watch-note">${w.list_price ? "Comparison price: $" + fmt(w.list_price) : "Discount unknown — no comparison price supplied"}</span></div></a>`;
+    cards.appendChild(article);
+  }
+  section.appendChild(cards);
+  grid.appendChild(section);
+}
+
 function renderGrid() {
+  if (state.vertical === "macbook128") { renderHardwareWatch(); return; }
   const grid = $("#grid");
   let deals = configuredDeals().filter((d) =>
     isBrandVisibleName(d.brand) &&
@@ -320,6 +382,12 @@ function renderGrid() {
     wrap.appendChild(sectionGrid);
     grid.appendChild(wrap);
   }
+}
+
+function setSort(mode) {
+  state.sort = mode;
+  const sel = $("#sort");
+  if (sel) sel.value = mode;
 }
 
 function sortDeals(deals, mode) {
@@ -359,6 +427,34 @@ function honestSignal(d) {
   return null;
 }
 
+const TRUST_REASON_LABELS = {
+  structured_source: "structured merchant feed",
+  listing_source: "merchant listing page",
+  merchant_markdown: "merchant supplied original and sale prices",
+  tracked_price_baseline: "discount confirmed by tracked history",
+  exact_variant_price: "price belongs to this exact variant",
+  product_level_price: "product-level advertised price",
+  identity_gtin: "global product identifier",
+  identity_mpn: "manufacturer model number",
+  identity_source_sku: "retailer SKU",
+  identity_vendor_style: "brand and style identity",
+  price_history_14d: "14+ days of price history",
+  price_history_3d: "3+ days of price history",
+  stock_rechecked: "stock rechecked before publication",
+};
+
+function trustLine(d) {
+  const level = d.trust_level || "caution";
+  const label = { verified: "Verified", high: "High confidence", medium: "Medium confidence",
+                  caution: "Use caution" }[level] || "Use caution";
+  const reasons = (d.trust_reasons || []).map((r) => TRUST_REASON_LABELS[r]).filter(Boolean);
+  const title = reasons.length ? reasons.join(" · ") : "Detailed evidence arrives with schema v4";
+  const score = Number.isInteger(d.trust_score) ? ` ${d.trust_score}` : "";
+  return `<span class="trust-line ${escapeAttr(level)}" title="${escapeAttr(title)}">` +
+    `<span aria-hidden="true">${level === "verified" ? "✓" : "◇"}</span> ` +
+    `${escapeHtml(label)}${score}</span>`;
+}
+
 function card(d, i) {
   const article = document.createElement("article");
   const watched = state.watchedIds.has(d.id);
@@ -370,11 +466,24 @@ function card(d, i) {
   const signal = honestSignal(d);
   const signalLine = signal
     ? `<span class="card-signal ${signal.cls}">${escapeHtml(signal.text)}</span>` : "";
+  const isRig = verticalOf(d) === "localllm";
+  const badge = isRig && d.discount_percent === 0
+    ? `<span class="badge ram">${escapeHtml(d.ram_gb ? d.ram_gb + "GB" : "")}</span>`
+    : `<span class="badge${hot}">-${d.discount_percent}%</span>`;
+  const wasPrice = d.list_price > d.sale_price
+    ? `<span class="price-was">$${fmt(d.list_price)}</span>` : "";
+  // Prefer the affiliate link so this (highest-traffic) surface earns attribution;
+  // fall back to the clean merchant URL, and only ever emit an http(s) href.
+  const affHref = safeHttp(d.affiliate_url);
+  const outHref = affHref || safeHttp(d.url);
+  const cardMain = outHref
+    ? `<a class="card-main" href="${escapeAttr(outHref)}" target="_blank" rel="${affHref ? "noopener sponsored nofollow" : "noopener"}">`
+    : `<a class="card-main">`;
   article.innerHTML =
-    `<a class="card-main" href="${escapeAttr(d.url)}" target="_blank" rel="noopener">
+    `${cardMain}
        <div class="card-media">
          ${imageTag(d)}
-         <span class="badge${hot}">-${d.discount_percent}%</span>
+         ${badge}
          <span class="size-pill">${escapeHtml(cardTypeLabel(d))}</span>
          <span class="item-markers">
            ${d.restocked ? `<span class="marker restock">Restocked</span>` : ""}
@@ -387,9 +496,11 @@ function card(d, i) {
          <span class="card-brand">${escapeHtml(d.brand)}</span>
          <span class="card-title">${escapeHtml(d.title)}</span>
          <span class="card-kind">${escapeHtml(cardKindLabel(d))}</span>
+         ${trustLine(d)}
+         ${d.price_scope === "product" ? '<span class="watch-note">Confirm price for selected size and color</span>' : ""}
          <div class="price-row">
            <span class="price-now">$${fmt(d.sale_price)}</span>
-           <span class="price-was">$${fmt(d.list_price)}</span>
+           ${wasPrice}
            ${signalLine}
          </div>
        </div>
@@ -398,6 +509,7 @@ function card(d, i) {
        <button type="button" class="card-menu-button" aria-expanded="false"
                aria-label="Actions for ${escapeAttr(d.title)}">⋯</button>
        <div class="card-menu" hidden>
+         ${d.brand === "Lululemon" ? '<a href="https://shop.lululemon.com/c/men-we-made-too-much" target="_blank" rel="noopener">Open men’s sale page</a>' : ""}
          <button type="button" data-action="watch">${watched ? "Unwatch" : "Watch this"}</button>
          <button type="button" data-action="hide">Hide this</button>
        </div>
@@ -705,36 +817,46 @@ function garmentOf(deal) {
   return deal.garment || deal.category || "other";
 }
 function gearTypeOf(deal) {
-  return deal.gear_type || (verticalOf(deal) === "electronics" ? "tech" : "other");
+  if (deal.gear_type) return deal.gear_type;
+  if (verticalOf(deal) === "electronics") return "tech";
+  if (verticalOf(deal) === "localllm") return "pc";
+  return "other";
 }
 function labelForGarment(value) {
   return GARMENT_LABELS[value] || titleCase(value);
 }
 function labelForGear(value) {
-  return GEAR_LABELS[value] || titleCase(value);
+  return GEAR_LABELS[value] || LOCALLLM_LABELS[value] || titleCase(value);
 }
 function verticalOrder(value) {
-  return { apparel: 0, gear: 1, electronics: 2 }[value] ?? 9;
+  return { apparel: 0, gear: 1, electronics: 2, localllm: 3 }[value] ?? 9;
 }
 function cardTypeLabel(deal) {
-  return verticalOf(deal) === "apparel"
-    ? (SIZE_LABELS[deal.size_bucket] || deal.size_label)
-    : cardKindLabel(deal);
+  if (verticalOf(deal) === "apparel") return SIZE_LABELS[deal.size_bucket] || deal.size_label;
+  if (verticalOf(deal) === "localllm") return labelForGear(gearTypeOf(deal));
+  return cardKindLabel(deal);
 }
 function cardKindLabel(deal) {
   if (verticalOf(deal) === "apparel") return labelForGarment(garmentOf(deal));
+  if (verticalOf(deal) === "localllm") return deal.ram_gb ? `${deal.ram_gb}GB memory` : "Local LLM rig";
   if (verticalOf(deal) === "electronics") return labelForGear(gearTypeOf(deal));
   return labelForGear(gearTypeOf(deal));
 }
+function sortRigsByPrice(deals) {
+  return [...deals].sort((a, b) => a.sale_price - b.sale_price);
+}
 function dealSections(deals) {
   if (state.vertical !== "all") {
-    return [{ title: VERTICAL_LABELS[state.vertical] || titleCase(state.vertical), deals }];
+    const ordered = state.vertical === "localllm" ? sortRigsByPrice(deals) : deals;
+    return [{ title: VERTICAL_LABELS[state.vertical] || titleCase(state.vertical), deals: ordered }];
   }
   const apparel = deals.filter((d) => verticalOf(d) === "apparel");
-  const gear = deals.filter((d) => verticalOf(d) !== "apparel");
+  const rigs = deals.filter((d) => verticalOf(d) === "localllm");
+  const gear = deals.filter((d) => verticalOf(d) !== "apparel" && verticalOf(d) !== "localllm");
   const sections = [];
   if (apparel.length) sections.push({ title: "Clothes", deals: apparel });
   if (gear.length) sections.push({ title: "Gear & Tech", deals: gear });
+  if (rigs.length) sections.push({ title: "Local LLM rigs", deals: sortRigsByPrice(rigs) });
   return sections;
 }
 function currentHiddenDeals() {
@@ -782,3 +904,6 @@ function fmt(n) { return Number(n).toLocaleString(undefined, { maximumFractionDi
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 function escapeAttr(s) { return escapeHtml(s); }
+// Only ever render http(s) URLs as an href — never a javascript:/data: scheme
+// from the generated feed (defense-in-depth; mirrors the /try safeHttp helper).
+function safeHttp(url) { return url && /^https?:\/\//i.test(url) ? url : null; }
