@@ -522,7 +522,7 @@ function card(d, i) {
        <button type="button" class="card-menu-button" aria-expanded="false"
                aria-label="Actions for ${escapeAttr(d.title)}">⋯</button>
        <div class="card-menu" hidden>
-         ${d.brand === "Lululemon" ? '<a href="https://shop.lululemon.com/c/men-we-made-too-much" target="_blank" rel="noopener">Open men’s sale page</a>' : ""}
+         ${d.brand === "Lululemon" ? '<a href="https://shop.lululemon.com/c/men-we-made-too-much/n18mhdznrqw" target="_blank" rel="noopener">Open men’s sale page</a>' : ""}
          <button type="button" data-action="watch">${watched ? "Unwatch" : "Watch this"}</button>
          <button type="button" data-action="hide">Hide this</button>
        </div>
