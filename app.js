@@ -53,6 +53,8 @@ const BRANDS_EXPANDED_PREF = "dealRadar.brandsExpanded";
 
 const state = {
   data: null,
+  searchQuery: "",
+  searchTerms: [],
   brands: new Set(),
   vertical: "all",
   garment: "all",
@@ -71,6 +73,8 @@ const state = {
 };
 
 const $ = (sel) => document.querySelector(sel);
+const searchIndex = new WeakMap();
+const brandNamesCache = new WeakMap();
 
 init();
 
@@ -113,6 +117,7 @@ async function init() {
   setupTrialBrands();
   setupBrandManager();
   setupPersonalization();
+  setupSearch();
   $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderGrid(); });
   $("#controls").hidden = false;
   renderGrid();
@@ -121,6 +126,51 @@ async function init() {
 function validFeed(data) {
   return data && Array.isArray(data.deals) && Array.isArray(data.sources)
     && Number.isFinite(Date.parse(data.generated_at)) && data.stale_after_minutes > 0;
+}
+
+/* Search stays local to the downloaded feed and combines with the filters. */
+function searchWords(text) {
+  const aliases = { knives: "knife", rucksack: "backpack", daypack: "backpack" };
+  return String(text || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/\bback\s+packs?\b/g, "backpack")
+    .split(/[^a-z0-9]+/).filter(Boolean).map((word) => {
+      const singular = word.length > 3 && word.endsWith("s") && !word.endsWith("ss")
+        ? word.slice(0, -1) : word;
+      return aliases[word] || aliases[singular] || singular;
+    });
+}
+
+function matchesSearchText(text) {
+  if (!state.searchTerms.length) return true;
+  const words = searchWords(text);
+  return state.searchTerms.every((term) => words.some((word) => word.startsWith(term)));
+}
+
+function passesSearch(d) {
+  if (!state.searchTerms.length) return true;
+  let words = searchIndex.get(d);
+  if (!words) {
+    words = searchWords([d.brand, d.title, d.category,
+      VERTICAL_LABELS[verticalOf(d)], garmentOf(d), labelForGarment(garmentOf(d)),
+      gearTypeOf(d), labelForGear(gearTypeOf(d))].filter(Boolean).join(" "));
+    searchIndex.set(d, words);
+  }
+  return state.searchTerms.every((term) => words.some((word) => word.startsWith(term)));
+}
+
+function setupSearch() {
+  const input = $("#deal-search");
+  const clear = $("#clear-search");
+  const update = () => {
+    state.searchQuery = input.value;
+    state.searchTerms = searchWords(input.value);
+    clear.hidden = !input.value;
+    buildChips();
+    renderGrid();
+  };
+  input.addEventListener("input", update);
+  clear.addEventListener("click", () => { input.value = ""; update(); input.focus(); });
+  $("#search-bar").hidden = false;
 }
 
 /* ---------- freshness / staleness ---------- */
@@ -178,7 +228,7 @@ function renderSources() {
 
 /* ---------- filter chips ---------- */
 function buildChips() {
-  const deals = configuredDeals();
+  const deals = configuredDeals().filter(passesSearch);
   const brandCounts = countBy(deals, (d) => d.brand);
   const defaultDeals = deals.filter((d) => isDefaultVisible(d) && passesItemFilters(d));
   const taxonomyDeals = defaultDeals.filter(passesTaxonomyFilters);
@@ -332,7 +382,9 @@ function renderHardwareWatch() {
   const grid = $("#grid");
   grid.innerHTML = "";
   $("#empty").hidden = true;
-  const items = [...(state.data.hardware_watches || [])].sort((a, b) => a.price - b.price);
+  const items = (state.data.hardware_watches || []).filter((w) =>
+    matchesSearchText([w.source, w.title, "MacBook Pro laptop 16 inch 128 GB", w.display_finish].join(" ")))
+    .sort((a, b) => a.price - b.price);
   $("#count").textContent = `${items.length} MacBook listings`;
   const section = document.createElement("section");
   section.className = "deal-section";
@@ -362,6 +414,7 @@ function renderGrid() {
   const grid = $("#grid");
   let deals = configuredDeals().filter((d) =>
     isBrandVisibleName(d.brand) &&
+    passesSearch(d) &&
     passesItemFilters(d) &&
     passesTaxonomyFilters(d) &&
     (state.brands.size > 0 ? state.brands.has(d.brand) : true) &&
@@ -791,9 +844,14 @@ function isBrandVisibleName(brand) {
   return true;
 }
 function configuredBrandNames() {
+  if (!state.data) return new Set();
+  const cached = brandNamesCache.get(state.data);
+  if (cached) return cached;
   const sourceBrands = (state.data?.sources || []).map((s) => s.brand);
   const dealBrands = (state.data?.deals || []).map((d) => d.brand);
-  return new Set([...sourceBrands, ...dealBrands]);
+  const names = new Set([...sourceBrands, ...dealBrands]);
+  brandNamesCache.set(state.data, names);
+  return names;
 }
 function rawConfiguredDeals() {
   const configured = configuredBrandNames();
@@ -904,7 +962,7 @@ function countBy(arr, fn) {
   return arr.reduce((acc, x) => { const k = fn(x); acc[k] = (acc[k] || 0) + 1; return acc; }, {});
 }
 function anyActiveFilter() {
-  return state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0 ||
+  return state.searchTerms.length > 0 || state.brands.size > 0 || state.size !== "all" || state.disabledBrands.size > 0 ||
     state.watchedOnly || state.newOnly || state.hiddenIds.size > 0 ||
     state.vertical !== "all" || state.garment !== "all" || state.gearType !== "all";
 }

@@ -105,6 +105,25 @@ body {
   font-size: 17px; color: var(--signal);
 }
 
+.search-bar {
+  flex-basis: 100%; display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 14px;
+}
+.search-bar[hidden] { display: none; }
+.search-bar:focus-within { border-color: var(--signal); }
+.search-bar label { font-weight: 700; color: var(--signal); }
+.search-bar input {
+  flex: 1; min-width: 0; border: 0; outline: 0; background: transparent;
+  color: var(--bone); font: inherit; font-size: 16px;
+}
+.search-bar input::placeholder { color: var(--muted); }
+.search-bar button {
+  border: 0; border-radius: 6px; background: var(--surface-2);
+  color: var(--bone); font: inherit; padding: 4px 8px; cursor: pointer;
+}
+.search-bar button:focus-visible { outline: 2px solid var(--signal); }
+
 main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
 
 /* ---------- controls ---------- */
@@ -646,7 +665,7 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
-  body { grid-template-columns: 1fr; grid-template-areas: "head" "rail" "main" "foot"; }
+  body { grid-template-columns: 1fr; grid-template-areas: "head" "main" "rail" "foot"; }
   .rail { position: static; flex-direction: row; flex-wrap: wrap; }
   .panel { flex: 1 1 240px; }
 }
