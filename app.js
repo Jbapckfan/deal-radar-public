@@ -146,6 +146,11 @@ function matchesSearchText(text) {
   return state.searchTerms.every((term) => words.some((word) => word.startsWith(term)));
 }
 
+function searchedHardwareWatches() {
+  return (state.data.hardware_watches || []).filter((w) =>
+    matchesSearchText([w.source, w.title, "MacBook Pro laptop 16 inch 128 GB", w.display_finish].join(" ")));
+}
+
 function passesSearch(d) {
   if (!state.searchTerms.length) return true;
   let words = searchIndex.get(d);
@@ -259,7 +264,7 @@ function buildChips() {
       ...Object.entries(verticalCounts)
         .sort(([a], [b]) => verticalOrder(a) - verticalOrder(b))
         .map(([k, n]) => [k, VERTICAL_LABELS[k] || titleCase(k), n]),
-      ["macbook128", "MacBook Pro 16″ · 128 GB", (state.data.hardware_watches || []).length]],
+      ["macbook128", "MacBook Pro 16″ · 128 GB", searchedHardwareWatches().length]],
     state.vertical,
     (value) => {
       state.vertical = value;
@@ -382,9 +387,7 @@ function renderHardwareWatch() {
   const grid = $("#grid");
   grid.innerHTML = "";
   $("#empty").hidden = true;
-  const items = (state.data.hardware_watches || []).filter((w) =>
-    matchesSearchText([w.source, w.title, "MacBook Pro laptop 16 inch 128 GB", w.display_finish].join(" ")))
-    .sort((a, b) => a.price - b.price);
+  const items = searchedHardwareWatches().sort((a, b) => a.price - b.price);
   $("#count").textContent = `${items.length} MacBook listings`;
   const section = document.createElement("section");
   section.className = "deal-section";
@@ -879,7 +882,7 @@ function passesSizeFilter(deal) {
   return deal.size_bucket === state.size;
 }
 function itemCount(predicate) {
-  return configuredDeals().filter((d) => isBrandVisibleName(d.brand) && predicate(d)).length;
+  return configuredDeals().filter((d) => isBrandVisibleName(d.brand) && passesSearch(d) && predicate(d)).length;
 }
 function verticalOf(deal) {
   return deal.vertical || "apparel";
