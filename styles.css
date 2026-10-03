@@ -113,6 +113,17 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
   padding: 24px 4px 8px;
 }
 .control-group { display: flex; flex-direction: column; gap: 10px; }
+.brand-filter { display: block; flex-basis: 100%; }
+.brand-filter summary {
+  display: flex; align-items: center; gap: 12px; width: fit-content;
+  cursor: pointer; list-style: none; border-radius: 8px; padding: 8px 0;
+}
+.brand-filter summary::-webkit-details-marker { display: none; }
+.brand-filter summary::after { content: "▾"; color: var(--signal); }
+.brand-filter[open] summary::after { content: "▴"; }
+.brand-filter summary:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; }
+.brand-filter .chips { margin-top: 10px; }
+#brand-selection { color: var(--bone-dim); font-size: 13px; }
 .control-label {
   font-size: 11px; text-transform: uppercase; letter-spacing: .2em;
   color: var(--muted); font-weight: 700;

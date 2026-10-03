@@ -49,6 +49,7 @@ const SEEN_IDS_PREF = "dealRadar.seenIds";
 const LAST_OPEN_AT_PREF = "dealRadar.lastOpenAt";
 const WATCHED_ONLY_PREF = "dealRadar.watchedOnly";
 const NEW_ONLY_PREF = "dealRadar.newOnly";
+const BRANDS_EXPANDED_PREF = "dealRadar.brandsExpanded";
 
 const state = {
   data: null,
@@ -75,6 +76,11 @@ init();
 
 async function init() {
   setupNotify();
+  const brandFilter = $("#brand-filter");
+  brandFilter.open = localStorage.getItem(BRANDS_EXPANDED_PREF) === "1";
+  brandFilter.addEventListener("toggle", () => {
+    localStorage.setItem(BRANDS_EXPANDED_PREF, brandFilter.open ? "1" : "0");
+  });
   const feedURL = CFG.DEALS_URL || "./deals.json";
   const cacheKey = "dealRadar.lastGoodFeed:" + new URL(feedURL, location.href).href;
   let saved = false;
@@ -258,6 +264,7 @@ function buildChips() {
 }
 
 function buildBrandChips(container, entries) {
+  updateBrandSelection();
   container.innerHTML = "";
   for (const [value, label, n, isTrial] of entries) {
     const btn = document.createElement("button");
@@ -270,10 +277,16 @@ function buildBrandChips(container, entries) {
       if (value === "all") state.brands.clear();
       else state.brands.has(value) ? state.brands.delete(value) : state.brands.add(value);
       refreshBrandPressed(container);
+      updateBrandSelection();
       renderGrid();
     });
     container.appendChild(btn);
   }
+}
+
+function updateBrandSelection() {
+  $("#brand-selection").textContent = state.brands.size
+    ? [...state.brands].sort().join(", ") : "All brands";
 }
 
 function refreshBrandPressed(container) {
