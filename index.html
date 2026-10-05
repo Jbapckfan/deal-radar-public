@@ -4,11 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deal Radar</title>
-<meta name="description" content="In-stock, my-size, 40%+ off — across the brands I actually wear." />
+<meta name="description" content="In-stock, my-size, 30%+ off — across the brands I actually wear." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=85d040ba" />
+<link rel="stylesheet" href="styles.css?v=cd780417a5" />
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
@@ -33,14 +33,22 @@
 
 <main>
   <section class="controls" id="controls" hidden>
-    <details class="control-group brand-filter" id="brand-filter">
-      <summary><span class="control-label">Brands</span><span id="brand-selection">All brands</span></summary>
-      <div class="chips" id="brand-chips"></div>
-    </details>
     <div class="control-group">
       <span class="control-label">Section</span>
       <div class="chips" id="vertical-chips"></div>
     </div>
+    <div class="browse-actions">
+      <button type="button" class="chip" id="lulu-quick">Lululemon · my sizes</button>
+      <button type="button" class="chip" id="open-preferences" aria-label="Your radar: hidden items and sources">Your radar</button>
+      <a class="chip add-source" href="http://100.70.109.113:8087/manage-sources" target="_blank" rel="noopener">+ Source</a>
+    </div>
+    <details id="advanced-filters" class="advanced-filters">
+      <summary>Filters &amp; sort <span id="filter-summary"></span></summary>
+      <div class="filter-content">
+    <details class="control-group brand-filter" id="brand-filter">
+      <summary><span class="control-label">Brands</span><span id="brand-selection">All brands</span></summary>
+      <div class="chips" id="brand-chips"></div>
+    </details>
     <div class="control-group" id="garment-group">
       <span class="control-label">Garment</span>
       <div class="chips" id="garment-chips"></div>
@@ -74,9 +82,15 @@
         <option value="brand">Brand</option>
       </select>
     </div>
+      </div>
+    </details>
+    <div class="results-context"><span id="active-filters"></span><button type="button" id="reset-filters" hidden>Clear filters</button></div>
+    <div class="lulu-sizes chips" id="lulu-sizes" hidden></div>
   </section>
 
   <section class="deal-sections" id="grid" aria-live="polite"></section>
+
+  <div class="load-more" id="pagination" hidden><span id="shown-count"></span><button type="button" id="show-more">Show more deals</button></div>
 
   <section class="empty" id="empty" hidden>
     <p class="empty-big">No deals on the radar.</p>
@@ -84,17 +98,24 @@
   </section>
 </main>
 
+<dialog id="preferences" aria-labelledby="preferences-title">
+  <div class="dialog-heading"><h2 id="preferences-title">Your radar</h2><button type="button" id="close-preferences">Done</button></div>
+  <p class="preference-note">Hiding and watching are saved on this browser. Restore anything here.</p>
 <aside class="rail">
   <div class="panel" id="sources-panel">
     <h2>Sources</h2>
-    <ul class="sources" id="sources"></ul>
+    <a class="notify-btn add-source" href="http://100.70.109.113:8087/manage-sources" target="_blank" rel="noopener">+ Add a website</a>
+    <p class="notify-help">Preview a website and add it to future scans. Connect to Tailscale to reach your private source manager.</p>
+    <details class="item-manager"><summary>Source health <span id="sources-summary"></span></summary>
+    <label class="sr-only" for="source-search">Find a source</label><input type="search" id="source-search" placeholder="Find a source…" />
+    <ul class="sources" id="sources"></ul></details>
     <label class="trial-toggle">
       <input type="checkbox" id="trial-toggle" />
       <span>Include trial brands</span>
     </label>
     <p class="trial-help">Shows Myles Apparel, Straight Down, Cuts, Linksoul, and True Classic.</p>
     <details class="brand-manager">
-      <summary>Manage brands</summary>
+      <summary>Show or hide brands</summary>
       <div class="brand-manager-list" id="brand-manager"></div>
       <div class="brand-manager-actions">
         <button type="button" id="enable-all-brands">Enable all</button>
@@ -110,7 +131,11 @@
        Opt in by subscribing to the topic in the ntfy app.</p>
   </div>
   <div class="panel" id="personal-panel">
-    <h2>Personal</h2>
+    <h2>Make room for better finds</h2>
+    <form id="exclude-form"><label for="exclude-phrase">Hide a word or phrase</label><div class="phrase-entry"><input id="exclude-phrase" maxlength="100" required placeholder="e.g. golf towel" /><button type="submit">Hide</button></div></form>
+    <p class="notify-help">Matches product names and item types. Hide skips matching names from the same brand, including colors and sizes.</p>
+    <div class="item-list" id="excluded-phrases"></div>
+    <div class="item-list" id="hidden-brands"></div>
     <button type="button" class="personal-action" id="mark-all-seen">Mark all seen</button>
     <details class="item-manager">
       <summary>Hidden items <span id="hidden-total">0</span></summary>
@@ -124,6 +149,8 @@
     </details>
   </div>
 </aside>
+</dialog>
+<div class="undo-toast" id="undo-toast" role="status" hidden><span id="undo-message"></span><button type="button" id="undo-action">Undo</button><button type="button" id="dismiss-undo" aria-label="Dismiss">×</button></div>
 
 <footer class="foot">
   <span id="generated">—</span>
@@ -131,7 +158,8 @@
   <span>Deals shown reflect the last successful scan. Stock can change after we check.</span>
 </footer>
 
-<script src="config.js"></script>
-<script src="app.js?v=dfc44b41"></script>
+<script src="config.js?v=3c43bfa960"></script>
+<script src="preferences.js?v=bbf76b9492"></script>
+<script src="app.js?v=5c50b503bf"></script>
 </body>
 </html>

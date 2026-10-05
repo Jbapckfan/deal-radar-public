@@ -50,6 +50,9 @@ const LAST_OPEN_AT_PREF = "dealRadar.lastOpenAt";
 const WATCHED_ONLY_PREF = "dealRadar.watchedOnly";
 const NEW_ONLY_PREF = "dealRadar.newOnly";
 const BRANDS_EXPANDED_PREF = "dealRadar.brandsExpanded";
+const PRODUCTS_PREF = "dealRadar.hiddenProducts.v1";
+const PHRASES_PREF = "dealRadar.hiddenPhrases.v1";
+const pref = window.DealPreferences;
 
 const state = {
   data: null,
@@ -70,6 +73,10 @@ const state = {
   watchedIds: loadSet(WATCHED_IDS_PREF),
   seenIds: loadSet(SEEN_IDS_PREF),
   newIds: new Set(),
+  hiddenProducts: loadArray(PRODUCTS_PREF),
+  hiddenPhrases: loadSet(PHRASES_PREF),
+  visibleLimit: 60,
+  renderSignature: "",
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -112,6 +119,8 @@ async function init() {
     $("#freshness").textContent = "saved deals — " + $("#freshness").textContent;
     $("#freshness").classList.add("stale");
   }
+  migrateHiddenProducts();
+  setupBrowsing();
   renderSources();
   buildChips();
   setupTrialBrands();
@@ -213,7 +222,11 @@ const REASON_LABELS = {
 function renderSources() {
   const ul = $("#sources");
   ul.innerHTML = "";
-  for (const s of (state.data.sources || []).filter((src) => isBrandVisibleName(src.brand))) {
+  const sources = state.data.sources || [];
+  const blocked = sources.filter(s => s.status === "blocked").length;
+  $("#sources-summary").textContent = `${sources.length} tracked${blocked ? ` · ${blocked} need attention` : ""}`;
+  const query = pref.normalize($("#source-search").value);
+  for (const s of sources.filter(src => pref.normalize(src.brand).includes(query))) {
     const li = document.createElement("li");
     li.className = "source" + (s.status === "blocked" ? " is-blocked" : "");
     // A healthy fetch that found 0 deals gets a neutral dot (not the green "api" dot)
@@ -235,7 +248,8 @@ function renderSources() {
 function buildChips() {
   const deals = configuredDeals().filter(passesSearch);
   const brandCounts = countBy(deals, (d) => d.brand);
-  const defaultDeals = deals.filter((d) => isDefaultVisible(d) && passesItemFilters(d));
+  const defaultDeals = deals.filter((d) => isDefaultVisible(d) && passesItemFilters(d) &&
+    (!state.brands.size || state.brands.has(d.brand)));
   const taxonomyDeals = defaultDeals.filter(passesTaxonomyFilters);
   const apparelDeals = taxonomyDeals.filter((d) => verticalOf(d) === "apparel");
   const sizeCounts = countBy(apparelDeals, (d) => d.size_bucket);
@@ -333,6 +347,7 @@ function buildBrandChips(container, entries) {
       else state.brands.has(value) ? state.brands.delete(value) : state.brands.add(value);
       refreshBrandPressed(container);
       updateBrandSelection();
+      buildChips();
       renderGrid();
     });
     container.appendChild(btn);
@@ -413,6 +428,11 @@ function renderHardwareWatch() {
 }
 
 function renderGrid() {
+  renderBrowsingContext();
+  const signature = JSON.stringify([state.searchQuery, [...state.brands].sort(), state.vertical,
+    state.garment, state.gearType, state.size, state.sort, state.newOnly, state.watchedOnly]);
+  if (signature !== state.renderSignature) { state.visibleLimit = 60; state.renderSignature = signature; }
+  $("#pagination").hidden = true;
   if (state.vertical === "macbook128") { renderHardwareWatch(); return; }
   const grid = $("#grid");
   let deals = configuredDeals().filter((d) =>
@@ -436,7 +456,11 @@ function renderGrid() {
   }
 
   let offset = 0;
-  for (const section of dealSections(deals)) {
+  const shown = deals.slice(0, state.visibleLimit);
+  $("#pagination").hidden = deals.length <= 60;
+  $("#shown-count").textContent = `Showing ${shown.length} of ${deals.length} deals`;
+  $("#show-more").hidden = shown.length === deals.length;
+  for (const section of dealSections(shown)) {
     const wrap = document.createElement("section");
     wrap.className = "deal-section";
     wrap.innerHTML =
@@ -575,12 +599,15 @@ function card(d, i) {
        </div>
      </a>
      <div class="card-actions">
+       <button type="button" class="hide-product" aria-label="Hide ${escapeAttr(d.title)} and its variants" title="Hide this product and its colors">Hide</button>
        <button type="button" class="card-menu-button" aria-expanded="false"
                aria-label="Actions for ${escapeAttr(d.title)}">⋯</button>
        <div class="card-menu" hidden>
          ${d.brand === "Lululemon" ? '<a href="https://shop.lululemon.com/c/men-we-made-too-much/n18mhdznrqw" target="_blank" rel="noopener">Open men’s sale page</a>' : ""}
          <button type="button" data-action="watch">${watched ? "Unwatch" : "Watch this"}</button>
          <button type="button" data-action="hide">Hide this</button>
+         <button type="button" data-action="hide-brand">Hide ${escapeHtml(d.brand)}</button>
+         <button type="button" data-action="hide-phrase">Hide a word or phrase…</button>
        </div>
      </div>`;
 
@@ -600,6 +627,15 @@ function card(d, i) {
     e.preventDefault();
     e.stopPropagation();
     hideDeal(d.id);
+  });
+  article.querySelector(".hide-product").addEventListener("click", () => hideDeal(d.id));
+  article.querySelector('[data-action="hide-brand"]').addEventListener("click", () => {
+    setBrandVisible(d.brand, false);
+    showUndo(`Hidden ${d.brand}`, () => setBrandVisible(d.brand, true));
+  });
+  article.querySelector('[data-action="hide-phrase"]').addEventListener("click", () => {
+    $("#preferences").showModal();
+    $("#exclude-phrase").focus();
   });
   return article;
 }
@@ -657,9 +693,16 @@ function setupPersonalization() {
   });
   $("#mark-all-seen")?.addEventListener("click", markAllSeen);
   $("#clear-hidden")?.addEventListener("click", () => {
+    const previous = state.hiddenProducts.slice();
+    const legacy = new Set(state.hiddenIds);
+    state.hiddenProducts = [];
     state.hiddenIds.clear();
-    saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+    saveHiddenProducts();
     refreshPersonalization();
+    showUndo("Hidden products restored", () => {
+      state.hiddenProducts = previous; state.hiddenIds = legacy;
+      saveHiddenProducts(); refreshPersonalization();
+    });
   });
   $("#clear-watched")?.addEventListener("click", () => {
     state.watchedIds.clear();
@@ -692,7 +735,7 @@ function renderBrandManager() {
            <span class="brand-toggle-meta">${counts[brand] || 0} deals</span>
          </span>
        </label>
-       <button type="button" class="brand-toggle-remove" ${visible ? "" : "disabled"}>Remove</button>`;
+       <button type="button" class="brand-toggle-remove" ${visible ? "" : "disabled"}>Hide</button>`;
     row.querySelector("input").addEventListener("change", (e) => {
       setBrandVisible(brand, e.target.checked);
     });
@@ -743,14 +786,24 @@ function closeCardMenus() {
 }
 
 function hideDeal(id) {
-  state.hiddenIds.add(id);
-  saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+  const deal = rawConfiguredDeals().find(d => d.id === id);
+  if (!deal) return;
+  if (state.hiddenProducts.some(record => pref.matchesProduct(deal, record))) return;
+  const record = { id, title: deal.title, brand: deal.brand, keys: pref.keys(deal) };
+  state.hiddenProducts.push(record);
+  saveHiddenProducts();
   refreshPersonalization();
+  showUndo(`Hidden ${deal.title} and its variants`, () => restoreDeal(record.id));
 }
 
 function restoreDeal(id) {
+  const record = state.hiddenProducts.find(r => r.id === id);
+  if (record) {
+    state.hiddenProducts = state.hiddenProducts.filter(r => r.id !== id);
+    for (const d of rawConfiguredDeals()) if (pref.matchesProduct(d, record)) state.hiddenIds.delete(d.id);
+  }
   state.hiddenIds.delete(id);
-  saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+  saveHiddenProducts();
   refreshPersonalization();
 }
 
@@ -790,11 +843,15 @@ function updateQuickFilterButtons() {
 }
 
 function renderPersonalLists() {
-  renderItemList($("#hidden-items"), currentHiddenDeals(), {
-    empty: "No hidden items.",
-    action: "Restore",
-    handler: restoreDeal,
+  renderPreferenceRows($("#hidden-items"), [
+    ...state.hiddenProducts.map(record => ({id:record.id, label:`${record.brand} · ${record.title}`})),
+    ...[...state.hiddenIds].filter(id => !state.hiddenProducts.some(r => r.id === id))
+      .map(id => ({id, label:`Saved item (${id})`}))
+  ], restoreDeal, "No hidden products.");
+  renderPreferenceRows($("#excluded-phrases"), [...state.hiddenPhrases].map(id => ({id, label:`Phrase: ${id}`})), id => {
+    state.hiddenPhrases.delete(id); saveSet(PHRASES_PREF, state.hiddenPhrases); refreshPersonalization();
   });
+  renderPreferenceRows($("#hidden-brands"), [...state.disabledBrands].map(id => ({id,label:`Brand: ${id}`})), id => setBrandVisible(id, true));
   renderItemList($("#watched-items"), currentWatchedDeals(), {
     empty: "No watched items.",
     action: "Unwatch",
@@ -802,7 +859,8 @@ function renderPersonalLists() {
   });
   const hiddenCount = $("#hidden-total");
   const watchedTotal = $("#watched-total");
-  if (hiddenCount) hiddenCount.textContent = String(state.hiddenIds.size);
+  if (hiddenCount) hiddenCount.textContent = String(state.hiddenProducts.length +
+    [...state.hiddenIds].filter(id => !state.hiddenProducts.some(r => r.id === id)).length);
   if (watchedTotal) watchedTotal.textContent = String(state.watchedIds.size);
 }
 
@@ -862,7 +920,9 @@ function rawConfiguredDeals() {
     d.in_stock === true && (configured.size === 0 || configured.has(d.brand)));
 }
 function configuredDeals() {
-  return rawConfiguredDeals().filter((d) => !state.hiddenIds.has(d.id));
+  return rawConfiguredDeals().filter((d) => !state.hiddenIds.has(d.id) &&
+    !state.hiddenProducts.some(record => pref.matchesProduct(d, record)) &&
+    ![...state.hiddenPhrases].some(phrase => pref.matchesPhrase(d, phrase)));
 }
 function passesItemFilters(deal) {
   if (state.watchedOnly && !state.watchedIds.has(deal.id)) return false;
@@ -924,14 +984,7 @@ function dealSections(deals) {
     const ordered = state.vertical === "localllm" ? sortRigsByPrice(deals) : deals;
     return [{ title: VERTICAL_LABELS[state.vertical] || titleCase(state.vertical), deals: ordered }];
   }
-  const apparel = deals.filter((d) => verticalOf(d) === "apparel");
-  const rigs = deals.filter((d) => verticalOf(d) === "localllm");
-  const gear = deals.filter((d) => verticalOf(d) !== "apparel" && verticalOf(d) !== "localllm");
-  const sections = [];
-  if (apparel.length) sections.push({ title: "Clothes", deals: apparel });
-  if (gear.length) sections.push({ title: "Gear & Tech", deals: gear });
-  if (rigs.length) sections.push({ title: "Local LLM rigs", deals: sortRigsByPrice(rigs) });
-  return sections;
+  return [{title: state.searchQuery ? "Search results" : "Your finds", deals}];
 }
 function currentHiddenDeals() {
   const byId = dealMap(rawConfiguredDeals());
@@ -981,3 +1034,104 @@ function escapeAttr(s) { return escapeHtml(s); }
 // Only ever render http(s) URLs as an href — never a javascript:/data: scheme
 // from the generated feed (defense-in-depth; mirrors the /try safeHttp helper).
 function safeHttp(url) { return url && /^https?:\/\//i.test(url) ? url : null; }
+
+/* Product family exclusions survive feed/SKU changes without broad title matching. */
+function loadArray(key) {
+  try { const value = JSON.parse(localStorage.getItem(key) || "[]"); return Array.isArray(value) ? value : []; }
+  catch (_) { return []; }
+}
+function saveHiddenProducts() {
+  localStorage.setItem(PRODUCTS_PREF, JSON.stringify(state.hiddenProducts));
+  saveSet(HIDDEN_IDS_PREF, state.hiddenIds);
+}
+function migrateHiddenProducts() {
+  for (const deal of rawConfiguredDeals()) {
+    if (state.hiddenIds.has(deal.id)) {
+      if (!state.hiddenProducts.some(record => pref.matchesProduct(deal, record)))
+        state.hiddenProducts.push({id:deal.id, title:deal.title, brand:deal.brand, keys:pref.keys(deal)});
+      state.hiddenIds.delete(deal.id);
+    }
+  }
+  saveHiddenProducts();
+}
+function renderPreferenceRows(root, rows, restore, empty = "") {
+  root.replaceChildren();
+  if (!rows.length) { root.textContent = empty; return; }
+  for (const {id, label} of rows) {
+    const row = document.createElement("div"); row.className = "item-row";
+    const text = document.createElement("span"); text.className = "item-row-text"; text.textContent = label;
+    const button = document.createElement("button"); button.type = "button"; button.textContent = "Restore";
+    button.addEventListener("click", () => restore(id)); row.append(text, button); root.append(row);
+  }
+}
+let undoAction;
+function showUndo(message, action) {
+  undoAction = action;
+  $("#undo-message").textContent = message;
+  $("#undo-toast").hidden = false;
+}
+function resetBrowsing() {
+  state.brands.clear(); state.vertical = state.garment = state.gearType = state.size = "all";
+  state.searchQuery = ""; state.searchTerms = []; state.newOnly = state.watchedOnly = false;
+  localStorage.setItem(NEW_ONLY_PREF, "0"); localStorage.setItem(WATCHED_ONLY_PREF, "0");
+  $("#deal-search").value = ""; $("#clear-search").hidden = true;
+  setSort("score"); buildChips(); renderGrid();
+}
+function setupBrowsing() {
+  const dialog = $("#preferences");
+  $("#open-preferences").addEventListener("click", () => dialog.showModal());
+  $("#close-preferences").addEventListener("click", () => dialog.close());
+  $("#source-search").addEventListener("input", renderSources);
+  $("#reset-filters").addEventListener("click", resetBrowsing);
+  $("#show-more").addEventListener("click", () => {
+    const oldCount = $("#grid").querySelectorAll(".card").length;
+    state.visibleLimit += 60; renderGrid();
+    $("#grid").querySelectorAll(".card-main")[oldCount]?.focus({preventScroll:true});
+  });
+  $("#lulu-quick").addEventListener("click", () => {
+    resetBrowsing(); state.brands.add("Lululemon"); state.vertical = "apparel";
+    buildChips(); renderGrid();
+  });
+  $("#exclude-form").addEventListener("submit", event => {
+    event.preventDefault();
+    const input = $("#exclude-phrase"); const phrase = pref.words(input.value);
+    if (!phrase) { input.setCustomValidity("Enter a word or phrase."); input.reportValidity(); return; }
+    if (state.hiddenPhrases.has(phrase)) return;
+    state.hiddenPhrases.add(phrase); saveSet(PHRASES_PREF, state.hiddenPhrases); input.value = "";
+    refreshPersonalization();
+    dialog.close();
+    showUndo(`Hidden phrase: ${phrase}`, () => {
+      state.hiddenPhrases.delete(phrase); saveSet(PHRASES_PREF, state.hiddenPhrases); refreshPersonalization();
+    });
+  });
+  $("#exclude-phrase").addEventListener("input", event => event.target.setCustomValidity(""));
+  $("#undo-action").addEventListener("click", () => {
+    const action = undoAction; undoAction = null; $("#undo-toast").hidden = true; action?.();
+  });
+  $("#dismiss-undo").addEventListener("click", () => { $("#undo-toast").hidden = true; undoAction = null; });
+  const managerURL = safeHttp(CFG.SOURCE_MANAGER_URL) || "http://100.70.109.113:8087/manage-sources";
+  document.querySelectorAll(".add-source").forEach(link => { link.href = managerURL; });
+}
+function renderBrowsingContext() {
+  const values = [state.searchQuery ? `“${state.searchQuery}”` : "", [...state.brands].join(", "),
+    state.vertical !== "all" ? (VERTICAL_LABELS[state.vertical] || "MacBook 128 GB") : "",
+    state.garment !== "all" ? labelForGarment(state.garment) : "",
+    state.gearType !== "all" ? labelForGear(state.gearType) : "",
+    state.size !== "all" ? SIZE_LABELS[state.size] : "", state.newOnly ? "New" : "", state.watchedOnly ? "Watched" : ""].filter(Boolean);
+  $("#active-filters").textContent = values.length ? values.join(" · ") : "In stock, in your sizes. Hide a product to skip every color.";
+  $("#filter-summary").textContent = values.length ? `(${values.length} active)` : "";
+  $("#reset-filters").hidden = !values.length;
+  const lulu = state.brands.size === 1 && state.brands.has("Lululemon");
+  $("#lulu-quick").setAttribute("aria-pressed", String(lulu));
+  $("#lulu-sizes").hidden = !lulu;
+  if (lulu) {
+    const deals = configuredDeals().filter(d => d.brand === "Lululemon" && passesSearch(d) && passesItemFilters(d));
+    const entries = [["all", "All my sizes", deals.length], ["medium", "Medium", deals.filter(d => d.size_bucket === "medium").length],
+      ["34x32", "Pants · 34×32", deals.filter(d => d.size_bucket === "34x32").length],
+      ["short_34", "Shorts · 34", deals.filter(d => d.size_bucket === "short_34").length],
+      ["shoe_12", "Shoes · 12", deals.filter(d => d.size_bucket === "shoe_12").length]];
+    buildFilterChips($("#lulu-sizes"), entries, state.size, value => {
+      state.size = value; state.garment = state.gearType = "all"; state.vertical = "apparel"; buildChips(); renderGrid();
+    });
+  }
+}
