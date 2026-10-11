@@ -5,7 +5,10 @@
 
 const CFG = window.DEAL_RADAR_CONFIG || {};
 const SIZE_LABELS = { medium: "Medium", "34x32": "34×32", short_34: "34 Shorts", shoe_12: "Size 12", one_size: "One size" };
-const VERTICAL_LABELS = { apparel: "Clothes", gear: "Gear", electronics: "Tech", localllm: "Local LLM" };
+const VERTICAL_LABELS = { apparel: "Clothes", gear: "Gear", electronics: "Tech", localllm: "Local LLM", storage: "Storage" };
+// Display-only mirror of storage.GREAT_USD_PER_TB: the crawler already applied
+// the $/TB rule; this only decides whether a card gets the "Great $/TB" marker.
+const GREAT_USD_PER_TB = 100;
 const LOCALLLM_LABELS = { apple: "Apple", nvidia: "NVIDIA", amd: "AMD", pc: "PC" };
 const GARMENT_LABELS = {
   tee: "Tees",
@@ -37,6 +40,7 @@ const GEAR_LABELS = {
   bag: "Bags",
   accessory: "Accessories",
   tech: "Tech",
+  ssd: "Portable SSD",
   other: "Other",
 };
 const TRIAL_BRANDS = new Set(["Myles Apparel", "Straight Down", "Cuts", "Linksoul", "True Classic"]);
@@ -217,6 +221,8 @@ const REASON_LABELS = {
   zero_discounts: "no discounts meet this source’s threshold",
   zero_matching_sizes: "nothing in your sizes",
   empty_feed: "feed returned nothing",
+  over_price_cap: "nothing under the $/TB cap",
+  robots: "blocked by robots.txt",
 };
 
 function renderSources() {
@@ -256,7 +262,7 @@ function buildChips() {
   const verticalCounts = countBy(defaultDeals, verticalOf);
   const garmentBase = defaultDeals.filter((d) => verticalOf(d) === "apparel");
   const gearBase = defaultDeals.filter((d) =>
-    ["gear", "electronics", "localllm"].includes(state.vertical)
+    ["gear", "electronics", "localllm", "storage"].includes(state.vertical)
       ? verticalOf(d) === state.vertical
       : verticalOf(d) !== "apparel");
   const garmentCounts = countBy(garmentBase, garmentOf);
@@ -286,7 +292,8 @@ function buildChips() {
       state.gearType = "all";
       if (state.vertical !== "apparel") state.size = "all";
       if (value === "localllm") setSort("price-asc");
-      else if (state.sort === "price-asc") setSort("score");
+      else if (value === "storage") setSort("value-asc");
+      else if (state.sort === "price-asc" || state.sort === "value-asc") setSort("score");
       buildChips();
       renderGrid();
     });
@@ -300,6 +307,13 @@ function buildChips() {
   $("#size-group").hidden = state.vertical !== "all" && state.vertical !== "apparel";
   $("#garment-group").hidden = !showGarments || Object.keys(garmentCounts).length === 0;
   $("#gear-group").hidden = !showGearTypes || Object.keys(gearCounts).length === 0;
+  // "Best $/TB" only means something while portable SSDs are in view.
+  const valueSort = $('#sort option[value="value-asc"]');
+  if (valueSort) {
+    valueSort.disabled = !verticalCounts.storage ||
+      !(state.vertical === "all" || state.vertical === "storage");
+    if (valueSort.disabled && state.sort === "value-asc") setSort("score");
+  }
   buildFilterChips($("#garment-chips"),
     [["all", "All", garmentBase.length],
       ...Object.entries(garmentCounts)
@@ -488,6 +502,9 @@ function sortDeals(deals, mode) {
     score: (a, b) => (b.score || 0) - (a.score || 0) || b.discount_percent - a.discount_percent,
     discount: (a, b) => b.discount_percent - a.discount_percent || a.sale_price - b.sale_price,
     "price-asc": (a, b) => a.sale_price - b.sale_price,
+    // Missing $/TB (non-storage) sorts last: Infinity - Infinity is NaN, so the
+    // price tie-break decides among those.
+    "value-asc": (a, b) => perTbOf(a) - perTbOf(b) || a.sale_price - b.sale_price,
     "price-desc": (a, b) => b.sale_price - a.sale_price,
     brand: (a, b) => a.brand.localeCompare(b.brand) || b.discount_percent - a.discount_percent,
   };
@@ -560,9 +577,13 @@ function card(d, i) {
   const signalLine = signal
     ? `<span class="card-signal ${signal.cls}">${escapeHtml(signal.text)}</span>` : "";
   const isRig = verticalOf(d) === "localllm";
+  const isStorage = verticalOf(d) === "storage";
   const badge = isRig && d.discount_percent === 0
     ? `<span class="badge ram">${escapeHtml(d.ram_gb ? d.ram_gb + "GB" : "")}</span>`
-    : `<span class="badge${hot}">-${d.discount_percent}%</span>`;
+    : isStorage && d.discount_percent === 0
+      ? `<span class="badge ram">${escapeHtml(d.size_label || "")}</span>`
+      : `<span class="badge${hot}">-${d.discount_percent}%</span>`;
+  const greatValue = isStorage && perTbOf(d) <= GREAT_USD_PER_TB;
   const wasPrice = d.list_price > d.sale_price
     ? `<span class="price-was">$${fmt(d.list_price)}</span>` : "";
   // Prefer the affiliate link so this (highest-traffic) surface earns attribution;
@@ -579,6 +600,7 @@ function card(d, i) {
          ${badge}
          <span class="size-pill">${escapeHtml(cardTypeLabel(d))}</span>
          <span class="item-markers">
+           ${greatValue ? `<span class="marker great">Great $/TB</span>` : ""}
            ${d.restocked ? `<span class="marker restock">Restocked</span>` : ""}
            ${d.price_drop_percent ? `<span class="marker drop">↓ ${d.price_drop_percent}%</span>` : ""}
            ${isNew ? `<span class="marker new">New</span>` : ""}
@@ -954,6 +976,7 @@ function gearTypeOf(deal) {
   if (deal.gear_type) return deal.gear_type;
   if (verticalOf(deal) === "electronics") return "tech";
   if (verticalOf(deal) === "localllm") return "pc";
+  if (verticalOf(deal) === "storage") return "ssd";
   return "other";
 }
 function labelForGarment(value) {
@@ -963,24 +986,40 @@ function labelForGear(value) {
   return GEAR_LABELS[value] || LOCALLLM_LABELS[value] || titleCase(value);
 }
 function verticalOrder(value) {
-  return { apparel: 0, gear: 1, electronics: 2, localllm: 3 }[value] ?? 9;
+  return { apparel: 0, gear: 1, electronics: 2, localllm: 3, storage: 4 }[value] ?? 9;
 }
 function cardTypeLabel(deal) {
   if (verticalOf(deal) === "apparel") return SIZE_LABELS[deal.size_bucket] || deal.size_label;
   if (verticalOf(deal) === "localllm") return labelForGear(gearTypeOf(deal));
+  if (verticalOf(deal) === "storage") return deal.size_label || labelForGear(gearTypeOf(deal));
   return cardKindLabel(deal);
 }
 function cardKindLabel(deal) {
   if (verticalOf(deal) === "apparel") return labelForGarment(garmentOf(deal));
   if (verticalOf(deal) === "localllm") return deal.ram_gb ? `${deal.ram_gb}GB memory` : "Local LLM rig";
   if (verticalOf(deal) === "electronics") return labelForGear(gearTypeOf(deal));
+  if (verticalOf(deal) === "storage") {
+    const kind = labelForGear(gearTypeOf(deal));
+    return Number.isFinite(perTbOf(deal)) ? `$${fmtPerTb(perTbOf(deal))}/TB · ${kind}` : kind;
+  }
   return labelForGear(gearTypeOf(deal));
+}
+function perTbOf(deal) {
+  const v = Number(deal.usd_per_tb);
+  return deal.usd_per_tb != null && Number.isFinite(v) ? v : Infinity;
+}
+/* Whole dollars without decimals ($120), anything else as cents ($82.50). */
+function fmtPerTb(n) {
+  const cents = Math.round(n * 100);
+  return cents % 100 === 0 ? String(cents / 100) : (cents / 100).toFixed(2);
 }
 function sortRigsByPrice(deals) {
   return [...deals].sort((a, b) => a.sale_price - b.sale_price);
 }
 function dealSections(deals) {
   if (state.vertical !== "all") {
+    // Storage is not forced here: the Storage chip selects "Best $/TB" and the
+    // sort dropdown stays in control, so other sorts keep working in that view.
     const ordered = state.vertical === "localllm" ? sortRigsByPrice(deals) : deals;
     return [{ title: VERTICAL_LABELS[state.vertical] || titleCase(state.vertical), deals: ordered }];
   }

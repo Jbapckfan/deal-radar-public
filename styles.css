@@ -300,6 +300,11 @@ main { grid-area: main; display: flex; flex-direction: column; min-width: 0; }
   background: var(--signal);
   color: var(--signal-ink);
 }
+.marker.great {
+  background: rgba(20,19,15,.82);
+  color: var(--signal);
+  border: 1px solid var(--signal);
+}
 .marker.restock {
   background: rgba(20,19,15,.82);
   color: var(--bone);
